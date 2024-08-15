@@ -1,26 +1,21 @@
 # Welcome to the Todo app
 
-The purpose of this exercise is to test your knowledge of SQL and your ability to use it with your language of choice (Python or Javascript).
+The purpose of this exercise is to test your knowledge of SQL and your ability to use it with your programming language.
 
 ## Let's get started
-In Javascript when we first open our app we will have to install the libraries it uses. In the terminal type ```npm i```
+In JavaScript when we first open our app we will have to install the libraries it uses. In the terminal type ```npm i```
 
-In Python when we first open our app we will have to install the libraries it uses. In the terminal type ```pip install flask```
+To start the app we need to first run the file _dbSetup_. This will setup the database _todo.db_ and (once you've wrote the code to do so) will create the user and todo tables.
 
-To start the app we need to first run the file _db_setup_. This will setup the database _todo.db_ and (once you've wrote the code to do so) will create the user and todo tables.
+In the terminal type the following command:
 
-In the terminal type the following commands:
-
-For Python:
-```python3 db_setup.py```
-
-For Javascript:
-```node db_setup.js```
+For JavaScript:
+```node dbSetup.js```
 
 If you ever want to do a hard reset of your app where you will delete all the tables and data in them you need to delete _todo.db_ and rerun the commands above. This will be useful if for example you've made an error when creating your tables. **Note if you do this it will delete any data you've added to your database.**
 
 ## Running your app
-To run your app, type ``` python3 main.py ``` for python or ``` node index.js ``` for javascript in the terminal. You should then get a pop up that asks if you want to Open in Browser. Select this option and your app should open in the browser.
+To run your app, type ``` node index.js ``` for JavaScript in the terminal. You should then get a pop up that asks if you want to Open in Browser. Select this option and your app should open in the browser.
 
 Now it's set up for you to use the app. When you make changes to the app ppress CTRL+C in the terminal then rerun your app. In your tab that is running your app, refresh the page. Your changes should now be working on your app.
 
@@ -37,27 +32,27 @@ The basic functionality should work in a logical way. For example you shouldn't 
 ## Tasks to complete
 For all the tasks you **must** use the function names, table names and column names specified. Your app may not work and you will be marked down if you do not.
 
-### In db_setup:
+### In dbSetup.js:
 
 This file is all about setting up your database and the tables in it. It will be run when you start or do a hard reset of your app. Make sure your table names and field names are exactly the same and are in the same order. This is important for the application to run correctly.
 
-Create a table called user. It should have the fields:
-- email_address - varchar and primary key
-- first_name - varchar
-- last_name  - varchar
-- notification_ind - char of length 1
+Create a table called ```user```. It should have the fields:
+- ```email_address``` - varchar and primary key
+- ```first_name``` - varchar
+- ```last_name```  - varchar
+- ```notification_ind``` - char of length 1
 
-Create a table called todo. It should have the fields:
-- todo_id - integer and primary key, this should auto increment when new todos are added
-- email_address - varchar
-- title - varchar
-- content - varchar
-- priority - char of length 1
-- archive_ind -  char of length 1 with a default value of 0
-- created_dt - timestamp that defaults to the current_timestamp
+Create a table called ```todo```. It should have the fields:
+- ```todo_id``` - integer and primary key, this should auto increment when new todos are added
+- ```email_address``` - varchar
+- ```title``` - varchar
+- ```content``` - varchar
+- ```priority``` - char of length 1
+- ```archive_ind``` -  char of length 1 with a default value of 0
+- ```created_dt``` - timestamp that defaults to the current_timestamp
 
 
-## In _db_helper_functions_:
+## In _dbHelperFunction_:
 
 This file contains all the queries that will make your app run. The queries you write will help with functionality such as adding users and returning lists of todos for the app to use. Pay attention to whether the function needs to return something and if it does, what it returns.
 
@@ -85,9 +80,7 @@ Finish the implementation of the following functions with the specified function
 
 In this file you will write queries that will collect data about the use of the app.
 
-**_In Python_** - each function will use the helper function return_data_from_query that will go to the database, run a given query and return the data it receives back. The functions all have a variable called query that is set to an empty string. Replace this empty string with the query you want to run in the function.
-
-**_In Javascript_** - each function has been set up with a sample query in it. The functions will return a Promise. Replace the sample query with the query you want the function to return.
+**_In JavaScript_** - each function has been set up with a sample query in it. The functions will return a Promise. Replace the sample query with the query you want the function to return.
 
 If you want to view the results of these functions open your application up in a new tab and add _/view_aggs_ to the address bar.
 
