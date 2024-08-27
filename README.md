@@ -2,6 +2,8 @@
 
 The purpose of this exercise is to test your knowledge of SQL and your ability to use it with your programming language.
 
+The SQLite Extension is provided in this project, refer to `SQLiteExtension.md` for the usage guide.
+
 ## Let's get started
 In JavaScript when we first open our app we will have to install the libraries it uses. In the terminal type ```npm i```
 
