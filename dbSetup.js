@@ -1,7 +1,9 @@
 function buildInsertString(data) {
   const fields = `(${Object.keys(data[0])})`;
-  const values = data.reduce((acc, item,i) => {
-    return acc + `('${Object.values(item)}')` + (i < data.length - 1 ? ',' : '');
+  const values = data.reduce((acc, item, i) => {
+    return (
+      acc + `('${Object.values(item)}')` + (i < data.length - 1 ? "," : "")
+    );
   }, "");
   return [fields, values];
 }

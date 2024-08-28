@@ -7,7 +7,8 @@
     "initialise": "node initialise.js",
     "query": "node query.js",
     "check": "npm run initialise; npm run query",
-    "test" : "jest"
+    "test": "jest",
+    "format": "prettier . --write"
   },
   "keywords": [],
   "author": "",

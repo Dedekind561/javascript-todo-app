@@ -8,5 +8,8 @@ const { setupDB, removeTables } = require("./dbSetup.js");
     driver: sqlite3.Database,
   });
   await removeTables(db);
-  await setupDB(db, {todos: [{ email_address: "mitchell@ada.ac.uk", email: 'geoff@ada.ac.uk' }], users: [{ email_address: "claire@ada.ac.uk" }]});
+  await setupDB(db, {
+    todos: [{ email_address: "mitchell@ada.ac.uk", email: "geoff@ada.ac.uk" }],
+    users: [{ email_address: "claire@ada.ac.uk" }],
+  });
 })();
