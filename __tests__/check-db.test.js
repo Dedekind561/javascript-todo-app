@@ -2,6 +2,7 @@ const { describe, expect, test } = require("@jest/globals");
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 const { setupDB, removeTables } = require("../dbSetup.js");
+const SQL = require("../dbHelperFunction.js");
 
 describe("check db", () => {
   let db;
@@ -17,7 +18,6 @@ describe("check db", () => {
     ];
     const users = [{ email_address: "claire@ada.ac.uk" }];
     await removeTables(db);
-    console.log("******");
     await setupDB(db, {
       todos,
       users,
@@ -25,12 +25,16 @@ describe("check db", () => {
   });
   test("fetches 2 todo records", async () => {
     const todos = await db.all("select * from todos");
-    console.log(todos, "<--- todos");
-    expect(todos.length).toBe(2);
+    expect(todos).toHaveLength(2);
   });
   test("database is reset (still fetches 2 todos)", async () => {
     const todos = await db.all("select * from todos");
-    console.log(todos, "<--- todos");
-    expect(todos.length).toBe(2);
+    expect(todos).toHaveLength(2);
+  });
+  test("can add a user to the database", async () => {
+    const sqlInstance = new SQL(db);
+    await sqlInstance.insertUser("steve@ada.ac.uk", "Steve", "Rich", "x");
+    const user = await db.get("select * from users where first_name='Steve'");
+    expect(user.first_name).toBe("Steve");
   });
 });
