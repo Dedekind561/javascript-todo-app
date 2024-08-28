@@ -1,106 +1,113 @@
-var sqlite3 = require('sqlite3').verbose()
+var sqlite3 = require("sqlite3").verbose();
 
 class Aggregates {
-  constructor(database="todo.sqlite") {
+  constructor(database = "todo.sqlite") {
     this.db = new sqlite3.Database(database);
   }
 
- totalUsers()  {
+  totalUsers() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  totalTodos()  {
+  totalTodos() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  todosPerUser()  {
+  todosPerUser() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  todosPerPriority()  {
+  todosPerPriority() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  maxTodos()  {
+  maxTodos() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  emailOfMaxTodos()  {
+  emailOfMaxTodos() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  minTodos()  {
+  minTodos() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 
-  emailOfMinTodos()  {
+  emailOfMinTodos() {
     return new Promise((resolve, reject) => {
-            this.db.all(
-              // Write query in the quotes below
-              `select * from user`,
-              (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
-    }
+      this.db.all(
+        // Write query in the quotes below
+        `select * from user`,
+        (err, results) => {
+          if (err) reject(err);
+          resolve(results);
+        },
+      );
+    });
+  }
 }
 
-
-module.exports = Aggregates
+module.exports = Aggregates;

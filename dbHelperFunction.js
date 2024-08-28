@@ -1,40 +1,25 @@
-const sqlite3 = require('sqlite3').verbose()
-
+const sqlite3 = require("sqlite3").verbose();
 
 class SQL {
-
-  constructor(database="todo.sqlite") {
+  constructor(database = "todo.sqlite") {
     this.db = new sqlite3.Database(database);
   }
 
-  
-  insertUser(emailAddress, firstName, lastName, notificationInd) {
-    }
+  insertUser(emailAddress, firstName, lastName, notificationInd) {}
 
-  
-  insertTodo(emailAddress, title, content, priority) {
-    }
+  insertTodo(emailAddress, title, content, priority) {}
 
-  
-  updateTodo(title, content, priority, todoId) {
-    }
+  updateTodo(title, content, priority, todoId) {}
 
-  
-  returnTodoById(todoId)  {
-    return {}
-    }
+  returnTodoById(todoId) {
+    return {};
+  }
 
-  
-  returnTodoByEmail(emailAddress)  {
-    return {}
-    }
-  
+  returnTodoByEmail(emailAddress) {
+    return {};
+  }
 
-  removeUser(emailAddress) {
-    }
-
-  
+  removeUser(emailAddress) {}
 }
-    
 
 module.exports = SQL;
