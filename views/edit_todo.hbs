@@ -1,0 +1,24 @@
+<form action="post_edit_todo" method="post">
+
+<input type="hidden" name="todo_id" value="{{todo.todo_id}}">
+
+<label for="title">Title:</label><br>
+  <input type="text" id="title" name="title" 
+  value="{{todo.title}}"><br><br>
+
+<label for="content">Content:</label><br>
+  <input type="text" id="content" name="content" 
+  value="{{todo.content}}"><br><br>
+
+<label for="priority">Priority:</label><br>
+  <select id="priority" name="priority">
+  <option value="U">Urgent</option>
+  <option value="H">High</option>
+  <option value="M">Medium</option>
+  <option value="L">Low</option>
+  </select><br></br>
+  
+  <button type="submit">Submit</button>
+</form
+<br></br>
+<a href="/">Home Page</a>
