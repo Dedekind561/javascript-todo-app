@@ -2,7 +2,11 @@ const sqlite3 = require("sqlite3").verbose();
 
 class SQL {
   constructor(db) {
-    this.db = db;
+    if (!db) {
+      this.db = new sqlite3.Database("todo.sqlite");
+    } else {
+      this.db = db;
+    }
   }
 
   async insertUser(emailAddress, firstName, lastName, notificationInd) {
