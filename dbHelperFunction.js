@@ -1,4 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
+const { groupUsers } = require("./lib/helpers.js");
 
 class SQL {
   constructor(db) {
@@ -7,6 +8,15 @@ class SQL {
     } else {
       this.db = db;
     }
+  }
+
+  async returnUsersAndTodos() {
+    const usersAndTodos = await this.db.all(`
+      select first_name, content, title, users.email_address from todos
+      full join users
+      on users.email_address = todos.email_address;
+      `);
+    return groupUsers(usersAndTodos);
   }
 
   async returnAllTodos() {
