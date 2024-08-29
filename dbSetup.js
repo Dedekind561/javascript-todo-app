@@ -8,6 +8,8 @@ function buildInsertString(data) {
   return [fields, values];
 }
 
+// buildInsertString() not working for an array of todos
+
 async function setupDB(db, { todos, users }) {
   const [userFields, userValues] = buildInsertString(users);
   const [todoFields, todoValues] = buildInsertString(todos);
