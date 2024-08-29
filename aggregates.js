@@ -1,112 +1,66 @@
-var sqlite3 = require("sqlite3").verbose();
+const sqlite3 = require("sqlite3").verbose();
 
 class Aggregates {
-  constructor(database = "todo.sqlite") {
-    this.db = new sqlite3.Database(database);
+  constructor(db) {
+    if (!db) {
+      this.db = new sqlite3.Database("todo.sqlite");
+    } else {
+      this.db = db;
+    }
   }
 
-  totalUsers() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async totalUsers() {
+    return this.db.get(`select count(*) as total_users from users`);
   }
 
-  totalTodos() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async totalTodos() {
+    return this.db.get(`select count(*) as total_todos from todos`);
   }
 
-  todosPerUser() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async todosPerUser() {
+    const result = await this.db.all(`
+      select count(todos.id) as total_todos, users.email_address as email
+      from todos
+      right join users
+      on users.email_address = todos.email_address 
+      group by users.email_address
+      `);
+    console.log(result,'result')
+    const todosPerUser = result.reduce((acc, { total_todos, email }) => {
+      acc[email] = { total_todos };
+      return acc;
+    }, {});
+    return todosPerUser;
   }
 
-  todosPerPriority() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async todosPerPriority() {
+    const result = await this.db.all(`
+      select count(todos.id) as total_todos, priority
+      from todos
+      group by priority
+      `);
+    const todosPerPriority = result.reduce((acc, { total_todos, priority }) => {
+      acc[priority] = { total_todos };
+      return acc;
+    }, {});
+    return todosPerPriority;
   }
 
-  maxTodos() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async maxTodos() {
+    return {}
   }
 
-  emailOfMaxTodos() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async emailOfMaxTodos() {
+    return {}
   }
 
-  minTodos() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async minTodos() {
+
+    return {}
   }
 
-  emailOfMinTodos() {
-    return new Promise((resolve, reject) => {
-      this.db.all(
-        // Write query in the quotes below
-        `select * from user`,
-        (err, results) => {
-          if (err) reject(err);
-          resolve(results);
-        },
-      );
-    });
+  async emailOfMinTodos() {
+    return {}
   }
 }
 
