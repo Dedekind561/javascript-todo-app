@@ -23,7 +23,7 @@ async function setupDB(db, { todos, users }) {
   await db.exec(
     `
     CREATE TABLE users (
-      email_address varchar,
+      email_address varchar primary key,
       first_name varchar,
       last_name varchar,
       notification_ind char
@@ -34,13 +34,14 @@ async function setupDB(db, { todos, users }) {
   await db.exec(
     `
     create table todos (
+      id integer primary key autoincrement,
       email_address varchar,
-      todo_id int,
       priority varchar,
       title varchar,
       content varchar,
       archive_ind char,
-      created_dt timestamp
+      created_dt timestamp,
+      FOREIGN KEY (email_address) REFERENCES users(email_address)
     );
     INSERT INTO todos ${todoFields} VALUES ${todoValues};
       `,
@@ -51,7 +52,13 @@ async function removeTables(db) {
   const rawDb = db.getDatabaseInstance();
   await rawDb.serialize();
   const tables = await db.all("SELECT name FROM sqlite_master WHERE type='table'");
-  await Promise.all(tables.map((table) => db.run(`DROP TABLE ${table.name}`)));
+  await Promise.all(
+    tables
+      .filter(({name}) => {
+        return name !== "sqlite_sequence";
+      })
+      .map((table) => db.run(`DROP TABLE ${table.name}`)),
+  );
 }
 
 module.exports = { setupDB, removeTables };
