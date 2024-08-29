@@ -3,7 +3,7 @@ const { groupUsers } = require("../lib/helpers.js");
 
 describe("helpers()", () => {
   describe("", () => {
-    test("another test here...", () => {
+    test("group and collect all todos for each user", () => {
       const users = [
         { first_name: "Steve", content: "Do homework", title: "Homework", email_address: "steve@ada.ac.uk" },
         {
