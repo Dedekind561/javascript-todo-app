@@ -3,6 +3,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 
 const SQL = require("./dbHelperFunction");
+console.log(SQL)
 const Aggregates = require("./aggregates");
 
 // Boilerplate

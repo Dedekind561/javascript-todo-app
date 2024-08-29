@@ -17,9 +17,23 @@ class SQL {
     );
   }
 
-  insertTodo(emailAddress, title, content, priority) {}
+  async insertTodo(emailAddress, title, content, priority) {
 
-  updateTodo(title, content, priority, todoId) {}
+    // email_address varchar,
+    //   todo_id int,
+    //   priority varchar,
+    //   archive_ind char,
+    //   created_dt timestamp
+    await this.db.run(
+      `
+      INSERT INTO todos (email_address,title,content,priority) VALUES ('${emailAddress}','${title}','${content}','${priority}');
+      `,
+    );
+  }
+
+  async updateTodo(title, content, priority, todoId) {
+    await this.db.run(`UPDATE todos SET content = ${content}, priority=${priority}, title=${title} WHERE todo_id = ${todoId}`)
+  }
 
   returnTodoById(todoId) {
     return {};

@@ -22,12 +22,15 @@ async function setupDB(db, { todos, users }) {
     INSERT INTO users ${userFields} VALUES ${userValues};
     `,
   );
+  console.log(todoValues)
   await db.exec(
     `
     create table todos (
       email_address varchar,
       todo_id int,
       priority varchar,
+      title varchar,
+      content varchar,
       archive_ind char,
       created_dt timestamp
     );
