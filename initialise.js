@@ -8,12 +8,12 @@ const { setupDB, removeTables } = require("./dbSetup.js");
     driver: sqlite3.Database,
   });
   const todos = [
-    { email_address: "steve@ada.ac.uk", id: 1, content: "Do homework", priority: "Urgent" },
-    { email_address: "geoff@ada.ac.uk", id: 2, content: "Organise meeting", priority: "Urgent" },
-    { email_address: "geoff@ada.ac.uk", id: 3, content: "Plan staff training", priority: "Important" },
-    { email_address: "geoff@ada.ac.uk", id: 4, content: "Interview candidate lecturer", priority: "Non-important" },
+    { email_address: "steve@ada.ac.uk", id: 1, content: "Do homework", priority: "Urgent", title: 'Homework' },
+    { email_address: "geoff@ada.ac.uk", id: 2, content: "Organise meeting", priority: "Urgent", title: 'Meetings' },
+    { email_address: "geoff@ada.ac.uk", id: 3, content: "Plan staff training", priority: "Important" , title: 'Planning'},
+    { email_address: "geoff@ada.ac.uk", id: 4, content: "Interview candidate lecturer", priority: "Non-important", title: 'Interviews' },
   ];
-  const users = [{ email_address: "claire@ada.ac.uk" }, { email_address: "steve@ada.ac.uk" }, { email_address: "geoff@ada.ac.uk" }];
+  const users = [{ email_address: "claire@ada.ac.uk", first_name: 'Claire' }, { email_address: "steve@ada.ac.uk", first_name: 'Steve' }, { email_address: "geoff@ada.ac.uk" , first_name: 'Geoff'}];
   await removeTables(db);
   await setupDB(db, {
     todos,
