@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "init:db": "node initialise.js",
-    "teardown:db" : "rm todo.sqlite",
+    "teardown:db": "rm todo.sqlite",
     "query": "node query.js",
     "check": "npm run initialise; npm run query",
     "test": "jest",
     "format": "prettier . --write",
-    "listen" : "nodemon index.js"
+    "listen": "nodemon index.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
   "dependencies": {
     "@types/node": "^18.0.6",
     "body-parser": "^1.20.0",
+    "eslint": "^9.9.1",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
