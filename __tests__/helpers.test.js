@@ -1,17 +1,5 @@
 const { describe, expect, test } = require("@jest/globals");
-
-function groupUsers(users) {
-  const groupedUsers = users.reduce((acc, user) => {
-    if (!acc[user.email]) {
-      acc[user.email_address] = { todos: [user.content], user: user.first_name, email: user.email_address };
-    } else {
-      console.log(acc[user.email_address])
-      acc[user.email_address].todos.push(user.content);
-    }
-    return acc;
-  }, {});
-  return Object.values(groupedUsers);
-}
+const { groupUsers } = require("../lib/helpers.js");
 
 describe("helpers()", () => {
   describe("", () => {
@@ -39,11 +27,11 @@ describe("helpers()", () => {
         { first_name: "Claire", content: null, title: null, email_address: "claire@ada.ac.uk" },
       ];
       const output = groupUsers(users);
-      console.log(output)
       expect(output).toEqual([
-        {user:'Steve', email: 'steve@ada.ac.uk', todos: ['Do homework']},
-        {user: 'Geoff', todos: ["Organise meeting", "Plan staff training","Interview candidate lecturer"]}
-      ])
+        { user: "Steve", email: "steve@ada.ac.uk", todos: ["Do homework"] },
+        { user: "Geoff", todos: ["Organise meeting", "Plan staff training", "Interview candidate lecturer"], email: "geoff@ada.ac.uk" },
+        { user: "Claire", todos: [null], email: "claire@ada.ac.uk" }
+      ]);
     });
   });
 });
