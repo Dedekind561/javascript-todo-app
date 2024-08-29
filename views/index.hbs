@@ -1,10 +1,22 @@
-<h2>Find user</h2>
+<h2>All users and todos</h2>
 <form action="list_todos" method="post">
 <label for="email">Email:</label>
 <input type="text" id="email" name="email" placeholder="Janedoe@gmail.com"><br></br>
   <button type="submit">Submit</button>
 <br></br>
 
+
+
 <a href="/user_signup">User Signup</a><br></br>
 <a href="/remove_user">Remove User</a><br></br>
 <a href="/add_todo">Add Todo</a><br></br>
+
+<h2>All todos</h2>
+{{#each todos}}
+  <p>{{this.content}}</p>
+{{/each}}
+
+<h2>All users</h2>
+{{#each users}}
+  <p>{{this.first_name}}</p>
+{{/each}}
