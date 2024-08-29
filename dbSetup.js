@@ -2,7 +2,14 @@ function buildInsertString(data) {
   const fields = `(${Object.keys(data[0])})`;
   const values = data.reduce((acc, item, i) => {
     return (
-      acc + `('${Object.values(item)}')` + (i < data.length - 1 ? "," : "")
+      acc +
+      "(" +
+      Object.values(item).reduce((acc, val, i, list) => {
+        if (typeof val === "string") val = `'${val}'`;
+        return acc + `${val}` + (i < list.length - 1 ? "," : "");
+      }, "") +
+      ")" +
+      (i < data.length - 1 ? "," : "")
     );
   }, "");
   return [fields, values];
@@ -24,7 +31,7 @@ async function setupDB(db, { todos, users }) {
     INSERT INTO users ${userFields} VALUES ${userValues};
     `,
   );
-  console.log(todoValues)
+  console.log(todoValues);
   await db.exec(
     `
     create table todos (
@@ -44,9 +51,7 @@ async function setupDB(db, { todos, users }) {
 async function removeTables(db) {
   const rawDb = db.getDatabaseInstance();
   await rawDb.serialize();
-  const tables = await db.all(
-    "SELECT name FROM sqlite_master WHERE type='table'",
-  );
+  const tables = await db.all("SELECT name FROM sqlite_master WHERE type='table'");
   await Promise.all(tables.map((table) => db.run(`DROP TABLE ${table.name}`)));
 }
 

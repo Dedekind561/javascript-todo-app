@@ -45,11 +45,11 @@ describe("check db", () => {
       // insertTodo(emailAddress, title, content, priority) {}
       // async updateTodo(title, content, priority, todoId) {
       const sqlInstance = new SQL(db);
-      await sqlInstance.updateTodo('my todo',)
+      await sqlInstance.insertTodo('lily@ada.ac.uk','Rest','Have a nap','Urgent');
       const todo = await db.get(
         "select * from todos where email_address='lily@ada.ac.uk'",
       );
-      expect(todo.title).toBe("Reminder assessments");
+      expect(todo.title).toBe("Rest");
     });
   });
   describe("updateTodo()", () => {

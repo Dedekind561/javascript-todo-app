@@ -32,7 +32,9 @@ class SQL {
   }
 
   async updateTodo(title, content, priority, todoId) {
-    await this.db.run(`UPDATE todos SET content = ${content}, priority=${priority}, title=${title} WHERE todo_id = ${todoId}`)
+    console.log({title, content, priority, todoId});
+    console.log(`UPDATE todos SET content = ${content}, priority=${priority}, title=${title} WHERE todo_id = ${todoId}`)
+    await this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE todo_id = ${todoId}`)
   }
 
   returnTodoById(todoId) {
