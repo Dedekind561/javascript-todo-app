@@ -33,11 +33,11 @@ class SQL {
     return this.db.get(`SELECT * FROM todos WHERE todo_id = ${todoId}`);
   }
 
-  returnTodoByEmail(emailAddress) {
+  async returnTodoByEmail(emailAddress) {
     return this.db.get(`SELECT * FROM todos WHERE email_address = '${emailAddress}'`);
   }
 
-  removeUser(emailAddress) {
+  async removeUser(emailAddress) {
    // performs a delete query on the database...
   }
 }

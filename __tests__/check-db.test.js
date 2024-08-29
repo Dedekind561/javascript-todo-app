@@ -13,8 +13,8 @@ describe("check db", () => {
       driver: sqlite3.Database,
     });
     const todos = [
-      { email_address: "mitchell@ada.ac.uk", todo_id: 1, content: 'Do homework' },
-      { email_address: "geoff@ada.ac.uk" , todo_id: 2, content: 'Organise meeting'},
+      { email_address: "mitchell@ada.ac.uk", todo_id: 1, content: "Do homework" },
+      { email_address: "geoff@ada.ac.uk", todo_id: 2, content: "Organise meeting" },
     ];
     const users = [{ email_address: "claire@ada.ac.uk" }];
     await removeTables(db);
@@ -42,13 +42,9 @@ describe("check db", () => {
   });
   describe("insertTodo()", () => {
     test("can insert a todo", async () => {
-      // insertTodo(emailAddress, title, content, priority) {}
-      // async updateTodo(title, content, priority, todoId) {
       const sqlInstance = new SQL(db);
-      await sqlInstance.insertTodo('lily@ada.ac.uk','Rest','Have a nap','Urgent');
-      const todo = await db.get(
-        "select * from todos where email_address='lily@ada.ac.uk'",
-      );
+      await sqlInstance.insertTodo("lily@ada.ac.uk", "Rest", "Have a nap", "Urgent");
+      const todo = await db.get("select * from todos where email_address='lily@ada.ac.uk'");
       expect(todo.title).toBe("Rest");
     });
   });
@@ -56,16 +52,35 @@ describe("check db", () => {
     // async updateTodo(title, content, priority, todoId) {
     test("can update a todo", async () => {
       const sqlInstance = new SQL(db);
-      await sqlInstance.updateTodo(
-        'x',
-        'Have a nap',
-        'Urgent',
-        1
-      );
-      const todo = await db.get(
-        "select * from todos where todo_id = 1",
-      );
+      await sqlInstance.updateTodo("x", "Have a nap", "Urgent", 1);
+      const todo = await db.get("select * from todos where todo_id = 1");
       expect(todo.content).toBe("Have a nap");
+    });
+  });
+  describe("returnTodoById()", () => {
+    test("returns a todo by id", async () => {
+      const sqlInstance = new SQL(db);
+      const todo = await sqlInstance.returnTodoById(2);
+      expect(todo.todo_id).toBe(2);
+      expect(todo.email_address).toBe("geoff@ada.ac.uk");
+    });
+  });
+  describe("returnTodoByEmail()", () => {
+    test("returns todo by email", async () => {
+      const sqlInstance = new SQL(db);
+      const todo = await sqlInstance.returnTodoByEmail("mitchell@ada.ac.uk");
+      expect(todo.todo_id).toBe(1);
+      expect(todo.content).toBe("Do homework");
+    });
+  });
+  describe("removeUser()", () => {
+    test("can remove a user", async () => {
+      const sqlInstance = new SQL(db);
+      const userBeforeDeletion = await db.get("select * from users where email_address='claire@ada.ac.uk'");
+      expect(userBeforeDeletion.email_address).toBe("claire@ada.ac.uk");
+      await sqlInstance.removeUser("mitchell@ada.ac.uk");
+      const todoAfterDeletion = await db.get("select * from users where email_address='mitchell@ada.ac.uk'");
+      expect(todoAfterDeletion).toBeFalsy();
     });
   });
 });

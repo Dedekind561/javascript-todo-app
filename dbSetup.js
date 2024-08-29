@@ -31,7 +31,6 @@ async function setupDB(db, { todos, users }) {
     INSERT INTO users ${userFields} VALUES ${userValues};
     `,
   );
-  console.log(todoValues);
   await db.exec(
     `
     create table todos (
