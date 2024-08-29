@@ -4,7 +4,7 @@ const { open } = require("sqlite");
 const { setupDB, removeTables } = require("../dbSetup.js");
 const SQL = require("../dbHelperFunction.js");
 
-describe("check db", () => {
+describe("SQL helpers", () => {
   let db;
 
   beforeEach(async () => {
@@ -16,7 +16,7 @@ describe("check db", () => {
       { email_address: "mitchell@ada.ac.uk", todo_id: 1, content: "Do homework" },
       { email_address: "geoff@ada.ac.uk", todo_id: 2, content: "Organise meeting" },
     ];
-    const users = [{ email_address: "claire@ada.ac.uk" }];
+    const users = [{ email_address: "claire@ada.ac.uk" }, { email_address: "josh@ada.ac.uk" }, { email_address: "steve@ada.ac.uk" }];
     await removeTables(db);
     await setupDB(db, {
       todos,
@@ -75,12 +75,13 @@ describe("check db", () => {
   });
   describe("removeUser()", () => {
     test("can remove a user", async () => {
+      const email = "claire@ada.ac.uk";
       const sqlInstance = new SQL(db);
-      const userBeforeDeletion = await db.get("select * from users where email_address='claire@ada.ac.uk'");
-      expect(userBeforeDeletion.email_address).toBe("claire@ada.ac.uk");
-      await sqlInstance.removeUser("mitchell@ada.ac.uk");
-      const todoAfterDeletion = await db.get("select * from users where email_address='mitchell@ada.ac.uk'");
-      expect(todoAfterDeletion).toBeFalsy();
+      const userBeforeDeletion = await db.get(`select * from users where email_address='${email}'`);
+      expect(userBeforeDeletion.email_address).toBe(email);
+      await sqlInstance.removeUser(email);
+      const user = await db.get(`select * from users where email_address='${email}'`);
+      expect(user).toBeFalsy();
     });
   });
 });
