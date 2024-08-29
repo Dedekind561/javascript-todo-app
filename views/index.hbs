@@ -1,22 +1,25 @@
 <h2>All users and todos</h2>
-<form action="list_todos" method="post">
-<label for="email">Email:</label>
-<input type="text" id="email" name="email" placeholder="Janedoe@gmail.com"><br></br>
-  <button type="submit">Submit</button>
-<br></br>
 
-
-
-<a href="/user_signup">User Signup</a><br></br>
-<a href="/remove_user">Remove User</a><br></br>
-<a href="/add_todo">Add Todo</a><br></br>
+<nav>
+  <a href="/user_signup">User Signup</a>
+<a href="/remove_user">Remove User</a>
+<a href="/add_todo">Add Todo</a>
+</nav>
 
 <h2>All todos</h2>
-{{#each todos}}
-  <p>{{this.content}}</p>
-{{/each}}
-
-<h2>All users</h2>
+<div class="user-container">
 {{#each users}}
-  <p>{{this.first_name}}</p>
+
+  <section class="user-card">
+  <p>First name: {{this.user}}</p>
+  <p>Email: {{this.email}}</p>
+  <ul>
+      {{#each this.todos}}
+    <li>{{this}}</li>
+  {{/each }}
+  </ul>
 {{/each}}
+</section>
+
+</ul>
+
