@@ -9,6 +9,16 @@ class SQL {
     }
   }
 
+  async returnAllTodos() {
+    const todos = await this.db.all("select * from todos");
+    return todos;
+  }
+
+  async returnAllUsers() {
+    const returnAllUsers = await this.db.all("select * from users");
+    return returnAllUsers;
+  }
+
   async insertUser(emailAddress, firstName, lastName, notificationInd) {
     return this.db.run(
       `
@@ -38,7 +48,7 @@ class SQL {
   }
 
   async removeUser(emailAddress) {
-   // performs a delete query on the database...
+    return this.db.run(`DELETE FROM users WHERE email_address = '${emailAddress}'`);
   }
 }
 
