@@ -2,24 +2,22 @@
 
 <nav>
   <a href="/user_signup">User Signup</a>
-<a href="/remove_user">Remove User</a>
-<a href="/add_todo">Add Todo</a>
+  <a href="/remove_user">Remove User</a>
+  <a href="/add_todo">Add Todo</a>
 </nav>
 
 <h2>All todos</h2>
 <div class="user-container">
-{{#each users}}
+  {{#each users}}
 
-  <section class="user-card">
-  <p>First name: {{this.user}}</p>
-  <p>Email: {{this.email}}</p>
-  <ul>
-      {{#each this.todos}}
-    <li>{{this}}</li>
-  {{/each }}
-  </ul>
-{{/each}}
-</section>
-
-</ul>
-
+    <section class="user-card">
+      <p>First name: {{this.user}}</p>
+      <p>Email: {{this.email}}</p>
+      <ul>
+        {{#each this.todos}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/each}}
+</div>

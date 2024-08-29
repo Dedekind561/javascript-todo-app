@@ -1,7 +1,7 @@
 <form action="edit_todo" method="post">
   {{#each todos}}
  <input type="radio" name="todo_id" value="{{this.todo_id}}">
-  <label for="{{this.todo_id}}">{{this.title}} - {{this.content}}</label><br>
+ <label for="{{this.todo_id}}">{{this.title}} - {{this.content}}</label><br>
 {{/each}}
 <br>
   <input type="submit" value="Edit">
