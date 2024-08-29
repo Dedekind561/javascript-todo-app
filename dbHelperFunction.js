@@ -10,7 +10,7 @@ class SQL {
   }
 
   async insertUser(emailAddress, firstName, lastName, notificationInd) {
-    await this.db.run(
+    return this.db.run(
       `
       INSERT INTO users (email_address,first_name, last_name, notification_ind) VALUES ('${emailAddress}','${firstName}','${lastName}','${notificationInd}');
       `,
@@ -18,13 +18,7 @@ class SQL {
   }
 
   async insertTodo(emailAddress, title, content, priority) {
-
-    // email_address varchar,
-    //   todo_id int,
-    //   priority varchar,
-    //   archive_ind char,
-    //   created_dt timestamp
-    await this.db.run(
+    return this.db.run(
       `
       INSERT INTO todos (email_address,title,content,priority) VALUES ('${emailAddress}','${title}','${content}','${priority}');
       `,
@@ -32,20 +26,20 @@ class SQL {
   }
 
   async updateTodo(title, content, priority, todoId) {
-    console.log({title, content, priority, todoId});
-    console.log(`UPDATE todos SET content = ${content}, priority=${priority}, title=${title} WHERE todo_id = ${todoId}`)
-    await this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE todo_id = ${todoId}`)
+    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE todo_id = ${todoId}`);
   }
 
-  returnTodoById(todoId) {
-    return {};
+  async returnTodoById(todoId) {
+    return this.db.get(`SELECT * FROM todos WHERE todo_id = ${todoId}`);
   }
 
   returnTodoByEmail(emailAddress) {
-    return {};
+    return this.db.get(`SELECT * FROM todos WHERE email_address = '${emailAddress}'`);
   }
 
-  removeUser(emailAddress) {}
+  removeUser(emailAddress) {
+   // performs a delete query on the database...
+  }
 }
 
 module.exports = SQL;
