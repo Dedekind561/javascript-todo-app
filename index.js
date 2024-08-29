@@ -36,9 +36,8 @@ const app = express();
   // HOME PAGE
 
   app.get("/", async (req, res) => {
-    const todos = await sql.returnAllTodos();
-    const users = await sql.returnAllUsers();
-    res.render("index", { todos, users });
+    const users = await sql.returnUsersAndTodos();
+    res.render("index", { users });
   });
 
   // LIST TODOS
@@ -95,8 +94,11 @@ const app = express();
 
   // ADD TODO
 
-  app.get("/add_todo", (req, res) => {
-    res.render("add_todo");
+  app.get("/add_todo", async (req, res) => {
+    const users = await sql.returnAllUsers();
+    res.render("add_todo", {
+      users,
+    });
   });
 
   app.post("/add_todo", (req, res) => {
