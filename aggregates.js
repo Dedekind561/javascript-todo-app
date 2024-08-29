@@ -25,7 +25,6 @@ class Aggregates {
       on users.email_address = todos.email_address 
       group by users.email_address
       `);
-    console.log(result,'result')
     const todosPerUser = result.reduce((acc, { total_todos, email }) => {
       acc[email] = { total_todos };
       return acc;
