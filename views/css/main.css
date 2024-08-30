@@ -66,8 +66,10 @@ div.footer {
 }
 
 .user-card {
-  border: 1px solid red;
   padding: 2em;
+  box-shadow: floralwhite;
+  border: 1px solid black;
+  margin-right: 1em;
 }
 
 .user-container {
@@ -77,4 +79,38 @@ div.footer {
 
 .is-complete {
   text-decoration: line-through;
+}
+
+.todo > * {
+  display: inline;
+}
+
+.todo {
+  background-color: lightcyan;
+  border-radius: 5px;
+}
+
+li.todo {
+  margin-bottom: 1em;
+  border: 1px solid green;
+  padding: 0.5em;
+}
+
+li.todo > img {
+  margin-bottom: 1em;
+}
+
+form > * {
+  display: block;
+  margin-bottom: 10px;
+}
+
+nav a {
+  background-color: aliceblue;
+  margin-left: 1em;
+  border-radius: 5px;
+}
+
+nav {
+  margin-bottom: 1em;
 }
