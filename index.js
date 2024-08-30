@@ -79,7 +79,8 @@ const app = express();
     let title = req.body.title;
     let content = req.body.content;
     let priority = req.body.priority;
-    sql.updateTodo(title, content, priority, todo_id);
+    let isComplete = req.body.is_complete;
+    sql.updateTodo(title, content, priority, todo_id, isComplete);
     res.redirect("/");
   });
 
@@ -122,8 +123,9 @@ const app = express();
 
   // REMOVE USER
 
-  app.get("/remove_user", (req, res) => {
-    res.render("remove_user");
+  app.get("/remove_user", async (req, res) => {
+    const users = await sql.returnAllUsers();
+    res.render("remove_user", { users });
   });
 
   app.post("/remove_user", (req, res) => {
