@@ -5,7 +5,7 @@ const todos = [
 
 function buildInsertString(data) {
   const fields = `(${Object.keys(data[0])})`;
-  const values = data.reduce((acc, item,i) => {
+  const values = data.reduce((acc, item, i) => {
     return (
       acc +
       "(" +
@@ -13,10 +13,9 @@ function buildInsertString(data) {
         if (typeof val === "string") val = `'${val}'`;
         return acc + `${val}` + (i < list.length - 1 ? "," : "");
       }, "") +
-      ")"  + (i < data.length - 1 ? "," : "")
+      ")" +
+      (i < data.length - 1 ? "," : "")
     );
   }, "");
   return [fields, values];
 }
-
-console.log(buildInsertString(todos));
