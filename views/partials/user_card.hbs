@@ -7,8 +7,10 @@
       <a href="/add_todo">Start adding todos...</a>
     {{/unless}}
     {{#each todos}}
-      <li class="{{ternary this.is_complete 'is-complete' ''}}">{{this.content}}</li>
-      <a href="/edit_todo?id={{this.id}}">Edit</a>
+      <li class="{{ternary this.is_complete 'is-complete todo' 'todo'}}">
+        <p>{{this.content}}</p>
+        <a href="/edit_todo?id={{this.id}}"><img src="../assets/pencil-line.svg" alt="triangle with all three sides equal" height="15" width="20" /></a>
+      </li>
     {{/each}}
   </ul>
 </section>
