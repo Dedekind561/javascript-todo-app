@@ -4,18 +4,23 @@
   <a href="/user_signup">User Signup</a>
   <a href="/remove_user">Remove User</a>
   <a href="/add_todo">Add Todo</a>
+  <a href="/edit_todo">Edit Todo</a>
 </nav>
 
-<h2>All todos</h2>
 <div class="user-container">
   {{#each users}}
 
     <section class="user-card">
-      <p>First name: {{this.user}}</p>
+      <h2>{{this.user}}'s todos</h2>
       <p>Email: {{this.email}}</p>
+      <p>Todo list</p>
       <ul>
+        {{#unless this.todos.length}}
+          <a href="/add_todo">Start adding todos...</a>
+        {{/unless}}
         {{#each this.todos}}
-          <li>{{this}}</li>
+          <li class="{{ternary this.is_complete 'is-complete' ''}}">{{this.content}}</li>
+          <a href="/edit_todo?id={{this.id}}">Edit</a>
         {{/each}}
       </ul>
     </section>

@@ -12,7 +12,7 @@ class SQL {
 
   async returnUsersAndTodos() {
     const usersAndTodos = await this.db.all(`
-      select first_name, content, title, users.email_address from todos
+      select todos.id as id, first_name, content, title, users.email_address, is_complete from todos
       full join users
       on users.email_address = todos.email_address;
       `);
@@ -46,11 +46,11 @@ class SQL {
   }
 
   async updateTodo(title, content, priority, todoId) {
-    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE todo_id = ${todoId}`);
+    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE id = ${todoId}`);
   }
 
   async returnTodoById(todoId) {
-    return this.db.get(`SELECT * FROM todos WHERE todo_id = ${todoId}`);
+    return this.db.get(`SELECT * FROM todos WHERE id = ${todoId}`);
   }
 
   async returnTodoByEmail(emailAddress) {

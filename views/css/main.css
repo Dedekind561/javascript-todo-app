@@ -67,6 +67,14 @@ div.footer {
 
 .user-card {
   border: 1px solid red;
+  padding: 2em;
+}
+
+.user-container {
   display: flex;
   flex-direction: row;
+}
+
+.is-complete {
+  text-decoration: line-through;
 }

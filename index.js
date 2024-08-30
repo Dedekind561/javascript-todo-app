@@ -22,6 +22,11 @@ const app = express();
     exphbs.engine({
       defaultLayout: "layout",
       extname: ".hbs",
+      helpers: {
+        ternary: function (condition, yes, no) {
+          return condition ? yes : no;
+        },
+      },
     }),
   );
   app.set("view engine", ".hbs");
@@ -37,6 +42,7 @@ const app = express();
 
   app.get("/", async (req, res) => {
     const users = await sql.returnUsersAndTodos();
+    console.log(users, "users");
     res.render("index", { users });
   });
 
@@ -54,8 +60,9 @@ const app = express();
 
   // EDIT TODO
 
-  app.get("/edit_todo", (req, res) => {
-    res.redirect("/");
+  app.get("/edit_todo", async (req, res) => {
+    const todo = await sql.returnTodoById(req.query.id);
+    res.render("edit_todo", { todo });
   });
 
   app.post("/edit_todo", async (req, res) => {
@@ -149,6 +156,6 @@ const app = express();
   });
 
   app.listen(3000, () => {
-    console.log(`App listening on port 4000`);
+    console.log(`App listening on port 3000`);
   });
 })();

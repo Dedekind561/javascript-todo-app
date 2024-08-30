@@ -41,6 +41,7 @@ async function setupDB(db, { todos, users }) {
       content varchar,
       archive_ind char,
       created_dt timestamp,
+      is_complete integer default 0,
       FOREIGN KEY (email_address) REFERENCES users(email_address)
     );
     INSERT INTO todos ${todoFields} VALUES ${todoValues};
@@ -54,7 +55,7 @@ async function removeTables(db) {
   const tables = await db.all("SELECT name FROM sqlite_master WHERE type='table'");
   await Promise.all(
     tables
-      .filter(({name}) => {
+      .filter(({ name }) => {
         return name !== "sqlite_sequence";
       })
       .map((table) => db.run(`DROP TABLE ${table.name}`)),
