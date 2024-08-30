@@ -44,7 +44,6 @@ const app = express();
 
   app.get("/", async (req, res) => {
     const users = await sql.returnUsersAndTodos();
-    console.log(users, "users");
     res.render("index", { users });
   });
 
@@ -158,6 +157,6 @@ const app = express();
   });
 
   app.listen(3000, () => {
-    console.log(`App listening on port 3000`);
+    console.log(`listening on port 3000...`);
   });
 })();
