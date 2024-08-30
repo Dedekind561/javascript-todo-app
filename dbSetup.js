@@ -1,25 +1,11 @@
-function buildInsertString(data) {
-  const fields = `(${Object.keys(data[0])})`;
-  const values = data.reduce((acc, item, i) => {
-    return (
-      acc +
-      "(" +
-      Object.values(item).reduce((acc, val, i, list) => {
-        if (typeof val === "string") val = `'${val}'`;
-        return acc + `${val}` + (i < list.length - 1 ? "," : "");
-      }, "") +
-      ")" +
-      (i < data.length - 1 ? "," : "")
-    );
-  }, "");
-  return [fields, values];
-}
-
 // buildInsertString() not working for an array of todos
+const { buildInsertString } = require("./lib/helpers.js");
 
 async function setupDB(db, { todos, users }) {
   const [userFields, userValues] = buildInsertString(users);
   const [todoFields, todoValues] = buildInsertString(todos);
+
+  await db.exec(`PRAGMA foreign_keys = ON;`);
   await db.exec(
     `
     CREATE TABLE users (
@@ -42,7 +28,7 @@ async function setupDB(db, { todos, users }) {
       archive_ind char,
       created_dt timestamp,
       is_complete integer default 0,
-      FOREIGN KEY (email_address) REFERENCES users(email_address)
+      foreign key(email_address) references users(email_address)
     );
     INSERT INTO todos ${todoFields} VALUES ${todoValues};
       `,
