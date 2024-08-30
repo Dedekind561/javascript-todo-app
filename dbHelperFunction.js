@@ -45,8 +45,9 @@ class SQL {
     );
   }
 
-  async updateTodo(title, content, priority, todoId) {
-    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}' WHERE id = ${todoId}`);
+  async updateTodo(title, content, priority, todoId, isComplete) {
+    isComplete = isComplete === "on" ? "1" : "0";
+    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId}`);
   }
 
   async returnTodoById(todoId) {
