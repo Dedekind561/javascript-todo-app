@@ -1,10 +1,8 @@
 <form action="edit_todo" method="post">
   {{#each todos}}
- <input type="radio" name="todo_id" value="{{this.todo_id}}">
- <label for="{{this.todo_id}}">{{this.title}} - {{this.content}}</label><br>
-{{/each}}
-<br>
-  <input type="submit" value="Edit">
+    <input type="radio" name="todo_id" value="{{this.todo_id}}" />
+    <label for="{{this.todo_id}}">{{this.title}} - {{this.content}}</label>
+  {{/each}}
+  <input type="submit" value="Edit" />
 </form>
-<br></br>
 <a href="/">Home Page</a>
