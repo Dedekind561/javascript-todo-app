@@ -8,6 +8,4 @@ const { open } = require("sqlite");
   });
   const users = await db.all("select * from users;");
   const todos = await db.all("select * from todos;");
-  console.log(users);
-  console.log(todos, "<---- todos");
 })();
