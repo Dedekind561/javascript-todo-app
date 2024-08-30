@@ -9,20 +9,6 @@
 
 <div class="user-container">
   {{#each users}}
-
-    <section class="user-card">
-      <h2>{{this.user}}'s todos</h2>
-      <p>Email: {{this.email}}</p>
-      <p>Todo list</p>
-      <ul>
-        {{#unless this.todos.length}}
-          <a href="/add_todo">Start adding todos...</a>
-        {{/unless}}
-        {{#each this.todos}}
-          <li class="{{ternary this.is_complete 'is-complete' ''}}">{{this.content}}</li>
-          <a href="/edit_todo?id={{this.id}}">Edit</a>
-        {{/each}}
-      </ul>
-    </section>
+    {{> user_card this}}
   {{/each}}
 </div>

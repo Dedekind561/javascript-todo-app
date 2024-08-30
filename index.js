@@ -3,6 +3,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const sqlite3 = require("sqlite3").verbose();
 const { open } = require("sqlite");
+const path = require("path");
 
 const SQL = require("./dbHelperFunction");
 const Aggregates = require("./aggregates");
@@ -27,6 +28,7 @@ const app = express();
           return condition ? yes : no;
         },
       },
+      partialsDir: path.join(__dirname, "/views/partials"),
     }),
   );
   app.set("view engine", ".hbs");
