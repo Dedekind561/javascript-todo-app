@@ -257,9 +257,10 @@ When implementing the required queries in `aggregates.js`, ensure that your func
 3. `todosPerUser()`:
 
    - Returns an array of objects, each with the following structure:
-     ```javascript
+
+```javascript
      { email: 'user@example.com', total_todos: 5 }
-     ```
+```
 
 4. `todosPerPriority()`:
 
@@ -278,15 +279,17 @@ When implementing the required queries in `aggregates.js`, ensure that your func
 5. `emailOfMaxTodos()`:
 
    - Returns a single object with the following structure:
-     ```javascript
+
+````javascript
      { email: 'user@example.com', max_todos: 10 }
-     ```
+```
 
 6. `emailOfMinTodos()`:
    - Returns a single object with the following structure:
-     ```javascript
-     { email: 'user@example.com', min_todos: 2 }
-     ```
+```javascript
+
+{ email: 'user@example.com', min_todos: 2 }
+```
 
 Note: this function can return a `min_todos` of `0` if there are no todos associated with a given user. If there are multiple users with the same minimum then it should return the first user
 
@@ -300,7 +303,7 @@ To ensure your query implementations in `aggregates.js` and `helpers.js` are wor
 
 npm run listen
 
-```
+````
 
 2. Open your web browser and navigate to `http://localhost:3000`.
 
