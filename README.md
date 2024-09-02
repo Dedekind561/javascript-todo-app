@@ -141,13 +141,12 @@ You will need to create the following tables in your database. You can edit `dbS
 
 ### `todos`
 
-- `todo_id`: A unique identifier for each todo, automatically incremented
+- `id`: A unique identifier for each todo, automatically incremented
 - `email_address`: The email address of the user who owns this todo (foreign key referencing the users table)
 - `title`: The title of the todo
 - `content`: The content or description of the todo
-- `priority`: A single character indicating the priority of the todo
-- `archive_ind`: A single character indicating whether the todo is archived (defaults to '0')
-- `created_dt`: A timestamp of when the todo was created (defaults to the current timestamp)
+- `priority`: A single character indicating the priority of the todo (can be one of `'U'`, `'H'`, `'M'` or `'L'`)
+- `created_at`: A timestamp of when the todo was created (defaults to the current timestamp)
 
 To execute these SQL commands:
 
