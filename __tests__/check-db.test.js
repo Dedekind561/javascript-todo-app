@@ -9,14 +9,20 @@ describe("SQL helpers", () => {
 
   beforeEach(async () => {
     db = await open({
-      filename: "todo.sqlite",
+      filename: "todo_test.sqlite",
       driver: sqlite3.Database,
     });
     const todos = [
-      { email_address: "mitchell@ada.ac.uk", todo_id: 1, content: "Do homework" },
-      { email_address: "geoff@ada.ac.uk", todo_id: 2, content: "Organise meeting" },
+      { email_address: "mitch@ada.ac.uk", content: "Do homework" },
+      { email_address: "geoff@ada.ac.uk", content: "Organise meeting" },
     ];
-    const users = [{ email_address: "claire@ada.ac.uk" }, { email_address: "josh@ada.ac.uk" }, { email_address: "steve@ada.ac.uk" }];
+    const users = [
+      { email_address: "claire@ada.ac.uk" },
+      { email_address: "josh@ada.ac.uk" },
+      { email_address: "steve@ada.ac.uk" },
+      { email_address: "mitch@ada.ac.uk" },
+      { email_address: "geoff@ada.ac.uk" },
+    ];
     await removeTables(db);
     await setupDB(db, {
       todos,
@@ -35,7 +41,7 @@ describe("SQL helpers", () => {
   describe("addUser()", () => {
     test("can add a user to the database", async () => {
       const sqlInstance = new SQL(db);
-      await sqlInstance.insertUser("steve@ada.ac.uk", "Steve", "Rich", "x");
+      await sqlInstance.insertUser({ emailAddress: "yasmine@ada.ac.uk", firstName: "Steve", lastName: "Rich", notificationInd: "x" });
       const user = await db.get("select * from users where first_name='Steve'");
       expect(user.first_name).toBe("Steve");
     });
@@ -43,8 +49,8 @@ describe("SQL helpers", () => {
   describe("insertTodo()", () => {
     test("can insert a todo", async () => {
       const sqlInstance = new SQL(db);
-      await sqlInstance.insertTodo("lily@ada.ac.uk", "Rest", "Have a nap", "Urgent");
-      const todo = await db.get("select * from todos where email_address='lily@ada.ac.uk'");
+      await sqlInstance.insertTodo({ emailAddress: "claire@ada.ac.uk", title: "Rest", content: "Have a nap", priority: "U" });
+      const todo = await db.get("select * from todos where email_address='claire@ada.ac.uk'");
       expect(todo.title).toBe("Rest");
     });
   });
@@ -52,8 +58,8 @@ describe("SQL helpers", () => {
     // async updateTodo(title, content, priority, todoId) {
     test("can update a todo", async () => {
       const sqlInstance = new SQL(db);
-      await sqlInstance.updateTodo("x", "Have a nap", "Urgent", 1);
-      const todo = await db.get("select * from todos where todo_id = 1");
+      await sqlInstance.updateTodo({ title: "x", content: "Have a nap", priority: "U", todoId: 1, isComplete: "1" });
+      const todo = await db.get("select * from todos where id = 1");
       expect(todo.content).toBe("Have a nap");
     });
   });
@@ -61,15 +67,16 @@ describe("SQL helpers", () => {
     test("returns a todo by id", async () => {
       const sqlInstance = new SQL(db);
       const todo = await sqlInstance.returnTodoById(2);
-      expect(todo.todo_id).toBe(2);
+      expect(todo.id).toBe(2);
       expect(todo.email_address).toBe("geoff@ada.ac.uk");
     });
   });
   describe("returnTodoByEmail()", () => {
     test("returns todo by email", async () => {
       const sqlInstance = new SQL(db);
-      const todo = await sqlInstance.returnTodoByEmail("mitchell@ada.ac.uk");
-      expect(todo.todo_id).toBe(1);
+      const todo = await sqlInstance.returnTodoByEmail("mitch@ada.ac.uk");
+
+      expect(todo.id).toBe(1);
       expect(todo.content).toBe("Do homework");
     });
   });

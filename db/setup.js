@@ -31,6 +31,7 @@ async function setupDB(db, { todos, users }) {
     );
     `,
   );
+
   await db.exec(
     `
     INSERT INTO users ${userFields} VALUES ${userValues};

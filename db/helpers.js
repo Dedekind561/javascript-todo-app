@@ -48,7 +48,7 @@ class SQL {
   }
 
   async updateTodo({ title, content, priority, todoId, isComplete }) {
-    const result = this.db.get(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId} returning *;`);
+    const result = await this.db.get(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId} returning *;`);
     return result;
   }
 
