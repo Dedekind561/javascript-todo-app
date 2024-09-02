@@ -1,0 +1,12 @@
+{
+  "name": "Node.js & SQLite3 Development Container",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+  },
+  "remoteUser": "node"
+}
