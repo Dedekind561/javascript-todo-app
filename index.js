@@ -164,6 +164,8 @@ const app = express();
       return acc;
     }, {});
 
+    console.log({ todosPerPriority });
+
     res.render("stats", {
       chartData: JSON.stringify({ labels: Object.keys(todosPerUser), values: Object.values(todosPerUser) }),
       todosPerPriority: JSON.stringify(groupUserByPriority(todosPerPriority)),
