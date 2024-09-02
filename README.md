@@ -1,11 +1,11 @@
-# 📝 TODO List Application
+# 📝 Todo List Application
 
 This README will guide you through setting up, working with, and testing the TODO List application.
 
 ## Table of Contents
 
 1. [⚙️ Check your installation](#️-check-your-installation)
-2. [🖼️ Viewing the TODO List UI](#️-viewing-the-todo-list-ui)
+2. [🖼️ Viewing the Todo List UI](#️-viewing-the-todo-list-ui)
 3. [📂 Locating Files to Edit](#-locating-files-to-edit)
 4. [💻 Working on this assignment](#-working-on-this-assignment)
 5. [🔄 Resetting the Database](#-resetting-the-database)
@@ -31,7 +31,7 @@ node -v
 sqlite3 --version
 ```
 
-## 🖼️ Viewing the TODO List UI
+## 🖼️ Viewing the Todo List UI
 
 1. Start the todo application frontend by running:
 
@@ -43,18 +43,13 @@ npm run listen
 
 ## 📂 Locating Files to Edit
 
-The files you'll need to edit are:
+The files you'll need to edit are inside the `db` folder:
 
-1. `dbSetup.js`: This file contains code to create tables and insert data.
+1. `setup.js`: This file contains code to create tables and insert data.
 
-   - Location: Root directory of the project
+1. `helpers.js`: This file contains helper functions for database operations.
 
-2. `dbHelperFunction.js`: This file contains helper functions for database operations.
-
-   - Location: Root directory of the project
-
-3. `aggregates.js`: This file contains functions for aggregating data from the database.
-   - Location: Root directory of the project
+1. `aggregates.js`: This file contains functions for aggregating data from the database.
 
 ## 💻 Working on this assignment
 
@@ -162,85 +157,90 @@ To execute these SQL commands:
 
 Note: The existing scripts in the project may already handle table creation. Use these commands if you need to manually recreate the tables or if you're setting up a new database instance.
 
-## ✅ Acceptance Criteria for Query Outputs
+## ✅ Acceptance Criteria for query outputs
 
-### dbHelperFunction.js
+### `db/helpers.js`
 
 When implementing the required functions in `dbHelperFunction.js`, ensure that your function outputs match the following criteria exactly:
 
-1. `returnUsersAndTodos()`:
+1.  `returnUsersAndTodos()`:
 
-   - Returns an array of objects, each representing a user with their todos:
-     ```javascript
-     [
-       {
-         user: "User Name",
-         todos: [
-           { id: 1, content: "Todo content", title: "Todo title", email_address: "user@example.com", is_complete: 0 },
-           // ... more todos
-         ],
-       },
-       // ... more users
-     ];
-     ```
+    - Returns an array of objects, each representing a user with their todos:
 
-2. `returnAllTodos()`:
+```js
+[
+  {
+    id: 1,
+    first_name: "Steve",
+    content: "Do homework",
+    title: "Homework",
+    email_address: "steve@ada.ac.uk",
+    is_complete: 1,
+  },
+  // .
+  // .
+  // .
+];
+// ... more todos with user names
+```
 
-   - Returns an array of all todo objects from the database:
-     ```javascript
-     [
-       { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
-       // ... more todos
-     ];
-     ```
+2.  `returnAllTodos()`:
 
-3. `returnAllUsers()`:
+    - Returns an array of all todo objects from the database:
+      ```javascript
+      [
+        { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+        // ... more todos
+      ];
+      ```
 
-   - Returns an array of all user objects from the database:
-     ```javascript
-     [
-       { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
-       // ... more users
-     ];
-     ```
+3.  `returnAllUsers()`:
 
-4. `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
+    - Returns an array of all user objects from the database:
+      ```javascript
+      [
+        { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
+        // ... more users
+      ];
+      ```
 
-   - Inserts a new user into the database.
-   - Returns the result of the database operation (implementation-specific).
+4.  `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
 
-5. `insertTodo({ emailAddress, title, content, priority })`:
+    - Inserts a new user into the database.
+    - Returns the result of the database operation (implementation-specific).
 
-   - Inserts a new todo into the database.
-   - Returns the result of the database operation (implementation-specific).
+5.  `insertTodo({ emailAddress, title, content, priority })`:
 
-6. `updateTodo({ title, content, priority, todoId, isComplete })`:
+    - Inserts a new todo into the database.
+    - Returns the result of the database operation (implementation-specific).
 
-   - Updates an existing todo in the database.
-   - Returns the result of the database operation (implementation-specific).
+6.  `updateTodo({ title, content, priority, todoId, isComplete })`:
 
-7. `returnTodoById(todoId)`:
+    - Updates an existing todo in the database.
+    - Returns the result of the database operation (implementation-specific).
 
-   - Returns a single todo object matching the given ID:
-     ```javascript
-     { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', archive_ind: null, created_dt: null, is_complete: 0 }
-     ```
+7.  `returnTodoById(todoId)`:
 
-8. `returnTodoByEmail(emailAddress)`:
+    - Returns a single todo object matching the given ID:
+      ```javascript
+      { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', archive_ind: null, created_dt: null, is_complete: 0 }
+      ```
 
-   - Returns an array of todo objects for the given email address:
-     ```javascript
-     [
-       { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
-       // ... more todos for this email
-     ];
-     ```
+8.  `returnTodoByEmail(emailAddress)`:
 
-9. `removeUser(emailAddress)`:
-   - Removes a user and their associated todos from the database.
-   - Returns the result of the database operation (implementation-specific).
+    - Returns an array of todo objects for the given email address:
+      ```javascript
+      [
+        { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+        // ... more todos for this email
+      ];
+      ```
 
-### aggregates.js
+9.  `removeUser(emailAddress)`:
+    - Removes a user and their associated todos from the database.
+    - Returns the result of the database operation (implementation-specific).
+
+### `db/aggregates.js`
 
 When implementing the required queries in `aggregates.js`, ensure that your function outputs match the following criteria exactly:
 
@@ -285,9 +285,11 @@ When implementing the required queries in `aggregates.js`, ensure that your func
      { email: 'user@example.com', min_todos: 2 }
      ```
 
-## 🧪 Verifying Query Implementations Using the UI
+Note: this function can return a `min_todos` of `0` if there are no todos associated with a given user. If there are multiple users with the same minimum then it should return the first user
 
-To ensure your query implementations in `aggregates.js` and `dbHelperFunction.js` are working correctly, you can interact with the application's user interface. This hands-on approach will help you verify that data is being persisted and retrieved correctly.
+## 🧪 Verifying query implementations Using the UI
+
+To ensure your query implementations in `aggregates.js` and `helpers.js` are working correctly, you can interact with the application's user interface. This hands-on approach will help you verify that data is being persisted and retrieved correctly.
 
 1. Start the application:
 
