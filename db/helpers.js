@@ -1,5 +1,4 @@
 const sqlite3 = require("sqlite3").verbose();
-const { groupUsers } = require("../lib/helpers.js");
 
 class SQL {
   constructor(db) {
@@ -26,16 +25,15 @@ class SQL {
       full join users
       on users.email_address = todos.email_address;
       `);
-    return groupUsers(result);
+    return result;
   }
 
   async insertUser({ emailAddress, firstName, lastName, notificationInd }) {
-    const result = await this.db.run(
+    return this.db.run(
       `
       INSERT INTO users (email_address,first_name, last_name, notification_ind) VALUES ('${emailAddress}','${firstName}','${lastName}','${notificationInd}');
       `,
     );
-    return result;
   }
 
   async insertTodo({ emailAddress, title, content, priority }) {
