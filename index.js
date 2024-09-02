@@ -25,7 +25,11 @@ const app = express();
       extname: ".hbs",
       helpers: {
         ternary: function (condition, yes, no) {
+          console.log({ condition, yes, no });
           return condition ? yes : no;
+        },
+        isChecked: function (condition) {
+          return condition ? "checked" : "";
         },
       },
       partialsDir: path.join(__dirname, "/views/partials"),
@@ -75,12 +79,12 @@ const app = express();
   //Handle edit todo form
 
   app.post("/post_edit_todo", (req, res) => {
-    let todo_id = req.body.todo_id;
+    let todoId = req.body.todo_id;
     let title = req.body.title;
     let content = req.body.content;
     let priority = req.body.priority;
     let isComplete = req.body.is_complete;
-    sql.updateTodo(title, content, priority, todo_id, isComplete);
+    sql.updateTodo({ title, content, priority, todoId, isComplete });
     res.redirect("/");
   });
 
@@ -96,7 +100,7 @@ const app = express();
     let lastName = req.body.lastName;
     let notificationInd = req.body.notifSettings;
 
-    sql.insertUser(email, firstName, lastName, notificationInd);
+    sql.insertUser({ email, firstName, lastName, notificationInd });
 
     res.redirect("/");
   });
@@ -105,6 +109,7 @@ const app = express();
 
   app.get("/add_todo", async (req, res) => {
     const users = await sql.returnAllUsers();
+    console.log(users, "<--- users");
     res.render("add_todo", {
       users,
     });
@@ -116,7 +121,7 @@ const app = express();
     let content = req.body.content;
     let priority = req.body.priority;
 
-    sql.insertTodo(email, title, content, priority);
+    sql.insertTodo({ email, title, content, priority });
 
     res.redirect("/");
   });
@@ -140,7 +145,7 @@ const app = express();
     res.status(200).send({ user });
   });
 
-  app.get("/view_aggs", async (req, res) => {
+  app.get("/stats", async (req, res) => {
     let aggs = new Aggregates(db);
     Promise.all([aggs.totalUsers(), aggs.totalTodos(), aggs.todosPerUser(), aggs.todosPerPriority(), aggs.maxTodos(), aggs.emailOfMaxTodos(), aggs.minTodos(), aggs.emailOfMinTodos()]).then(
       ([totalUsers, totalTodos, todosPerUser, todosPerPriority, maxTodos, emailOfMaxTodos, minTodos, emailOfMinTodos]) => {

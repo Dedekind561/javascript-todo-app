@@ -28,7 +28,9 @@ async function setupDB(db, { todos, users }) {
       archive_ind char,
       created_dt timestamp,
       is_complete integer default 0,
-      foreign key(email_address) references users(email_address)
+      foreign key(email_address) 
+      references users(email_address) 
+      on delete cascade
     );
     INSERT INTO todos ${todoFields} VALUES ${todoValues};
       `,

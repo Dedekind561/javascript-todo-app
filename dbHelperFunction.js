@@ -29,7 +29,7 @@ class SQL {
     return returnAllUsers;
   }
 
-  async insertUser(emailAddress, firstName, lastName, notificationInd) {
+  async insertUser({ emailAddress, firstName, lastName, notificationInd }) {
     return this.db.run(
       `
       INSERT INTO users (email_address,first_name, last_name, notification_ind) VALUES ('${emailAddress}','${firstName}','${lastName}','${notificationInd}');
@@ -37,7 +37,7 @@ class SQL {
     );
   }
 
-  async insertTodo(emailAddress, title, content, priority) {
+  async insertTodo({ emailAddress, title, content, priority }) {
     return this.db.run(
       `
       INSERT INTO todos (email_address,title,content,priority) VALUES ('${emailAddress}','${title}','${content}','${priority}');
@@ -45,7 +45,7 @@ class SQL {
     );
   }
 
-  async updateTodo(title, content, priority, todoId, isComplete) {
+  async updateTodo({ title, content, priority, todoId, isComplete }) {
     isComplete = isComplete === "on" ? "1" : "0";
     return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId}`);
   }
