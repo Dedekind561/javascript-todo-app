@@ -8,10 +8,12 @@ const { setupDB, removeTables } = require("./dbSetup.js");
     driver: sqlite3.Database,
   });
   const todos = [
-    { email_address: "steve@ada.ac.uk", id: 1, content: "Do homework", priority: "Urgent", title: "Homework", is_complete: 1 },
-    { email_address: "geoff@ada.ac.uk", id: 2, content: "Organise meeting", priority: "Urgent", title: "Meetings", is_complete: 1 },
-    { email_address: "geoff@ada.ac.uk", id: 3, content: "Plan staff training", priority: "Important", title: "Planning", is_complete: 0 },
-    { email_address: "geoff@ada.ac.uk", id: 4, content: "Interview candidate lecturer", priority: "Non-important", title: "Interviews", is_complete: 0 },
+    { email_address: "steve@ada.ac.uk", content: "Do homework", priority: "H", title: "Homework", is_complete: 1 },
+    { email_address: "geoff@ada.ac.uk", content: "Organise meeting", priority: "H", title: "Meetings", is_complete: 1 },
+    { email_address: "geoff@ada.ac.uk", content: "Plan staff training", priority: "L", title: "Planning", is_complete: 0 },
+    { email_address: "geoff@ada.ac.uk", content: "Interview candidate lecturer", priority: "M", title: "Interviews", is_complete: 0 },
+    { email_address: "geoff@ada.ac.uk", content: "Plan all staff day", priority: "M", title: "Interviews", is_complete: 0 },
+    { email_address: "geoff@ada.ac.uk", content: "Walk the dog", priority: "L", title: "Interviews", is_complete: 0 },
   ];
   const users = [
     { email_address: "claire@ada.ac.uk", first_name: "Claire" },
