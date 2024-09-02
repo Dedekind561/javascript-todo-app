@@ -29,23 +29,27 @@ class SQL {
   }
 
   async insertUser({ emailAddress, firstName, lastName, notificationInd }) {
-    return this.db.run(
+    const result = await this.db.get(
       `
       INSERT INTO users (email_address,first_name, last_name, notification_ind) VALUES ('${emailAddress}','${firstName}','${lastName}','${notificationInd}');
       `,
     );
+    return result;
   }
 
   async insertTodo({ emailAddress, title, content, priority }) {
-    return this.db.run(
+    const result = await this.db.get(
       `
-      INSERT INTO todos (email_address,title,content,priority) VALUES ('${emailAddress}','${title}','${content}','${priority}');
+      INSERT INTO todos (email_address,title,content,priority) VALUES ('${emailAddress}','${title}','${content}','${priority}') returning *;
       `,
     );
+
+    return result;
   }
 
   async updateTodo({ title, content, priority, todoId, isComplete }) {
-    return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId}`);
+    const result = this.db.get(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId} returning *;`);
+    return result;
   }
 
   async returnTodoById(todoId) {
@@ -60,7 +64,8 @@ class SQL {
 
   async removeUser(emailAddress) {
     await this.db.run("PRAGMA foreign_keys = ON;");
-    return this.db.run(`DELETE FROM users WHERE email_address = '${emailAddress}'`);
+    const result = await this.db.run(`DELETE FROM users WHERE email_address = '${emailAddress}'`);
+    return result;
   }
 }
 
