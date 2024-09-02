@@ -1,116 +1,352 @@
-# Welcome to the Todo app
+# 📝 TODO List Application
 
-The purpose of this exercise is to test your knowledge of SQL and your ability to use it with your programming language.
+This README will guide you through setting up, working with, and testing the TODO List application.
 
-The SQLite Extension is provided in this project, refer to `SQLiteExtension.md` for the usage guide.
+## Table of Contents
 
-## Let's get started
+1. [⚙️ Check your installation](#️-check-your-installation)
+2. [🖼️ Viewing the TODO List UI](#️-viewing-the-todo-list-ui)
+3. [📂 Locating Files to Edit](#-locating-files-to-edit)
+4. [💻 Working on this assignment](#-working-on-this-assignment)
+5. [🔄 Resetting the Database](#-resetting-the-database)
+6. [🔍 Checking Database State with sqlite3](#-checking-database-state-with-sqlite3)
+7. [🏗️ Creating Database Tables](#️-creating-database-tables)
+8. [✅ Acceptance Criteria for Query Outputs](#-acceptance-criteria-for-query-outputs)
+   - [dbHelperFunction.js](#dbhelperfunctionjs)
+   - [aggregates.js](#aggregatesjs)
+9. [🧪 Verifying Query Implementations Using the UI](#-verifying-query-implementations-using-the-ui)
+10. [📝 Additional Notes](#-additional-notes)
 
-In JavaScript when we first open our app we will have to install the libraries it uses. In the terminal type `npm i`
+## ⚙️ Check your installation
 
-To start the app we need to first run the file _dbSetup_. This will setup the database _todo.db_ and (once you've wrote the code to do so) will create the user and todo tables.
+1. Check you have node installed in your project:
 
-In the terminal type the following command:
+```terminal
+node -v
+```
 
-For JavaScript:
-`node dbSetup.js`
+2. Check you have sqlite3 installed in your project:
 
-If you ever want to do a hard reset of your app where you will delete all the tables and data in them you need to delete _todo.db_ and rerun the commands above. This will be useful if for example you've made an error when creating your tables. **Note if you do this it will delete any data you've added to your database.**
+```terminal
+sqlite3 --version
+```
 
-## Running your app
+## 🖼️ Viewing the TODO List UI
 
-To run your app, type `node index.js` for JavaScript in the terminal. You should then get a pop up that asks if you want to Open in Browser. Select this option and your app should open in the browser.
+1. Start the todo application frontend by running:
 
-Now it's set up for you to use the app. When you make changes to the app ppress CTRL+C in the terminal then rerun your app. In your tab that is running your app, refresh the page. Your changes should now be working on your app.
+```terminal
+npm run listen
+```
 
-## About the app
+2. Open a web browser and go to `http://localhost:3000` to view the TODO list UI.
 
-This app has a few pieces of basic functionality:
+## 📂 Locating Files to Edit
 
-- Creating a user
-- Creating a todo
-- Viewing a users todos
-- Editing a todo
-- Deleting a user
+The files you'll need to edit are:
 
-The basic functionality should work in a logical way. For example you shouldn't be able to have todos for a user that doesn't exist and each email should only exist once.
+1. `dbSetup.js`: This file contains code to create tables and insert data.
 
-## Tasks to complete
+   - Location: Root directory of the project
 
-For all the tasks you **must** use the function names, table names and column names specified. Your app may not work and you will be marked down if you do not.
+2. `dbHelperFunction.js`: This file contains helper functions for database operations.
 
-### In dbSetup.js:
+   - Location: Root directory of the project
 
-This file is all about setting up your database and the tables in it. It will be run when you start or do a hard reset of your app. Make sure your table names and field names are exactly the same and are in the same order. This is important for the application to run correctly.
+3. `aggregates.js`: This file contains functions for aggregating data from the database.
+   - Location: Root directory of the project
 
-Create a table called `users`. It should have the fields:
+## 💻 Working on this assignment
 
-- `email_address` - varchar and primary key
-- `first_name` - varchar
-- `last_name` - varchar
-- `notification_ind` - char of length 1
+We want to reassure you that your primary focus should be on writing effective SQL queries. Here's what you need to know:
 
-Create a table called `todos`. It should have the fields:
+### What You Need to Do:
 
-- `todo_id` - integer and primary key, this should auto increment when new todos are added
-- `email_address` - varchar
-- `title` - varchar
-- `content` - varchar
-- `priority` - char of length 1
-- `archive_ind` - char of length 1 with a default value of 0
-- `created_dt` - timestamp that defaults to the current_timestamp
+- Your main task is to write SQL queries within the backticks (` `) in the `aggregates.js`, `helpers.js` and `setup.js` files inside the `db` folder.
+- Focus on crafting correct SQL statements to retrieve or manipulate the data as required by each function.
 
-## In _dbHelperFunction_:
+### What You Don't Need to Worry About:
 
-This file contains all the queries that will make your app run. The queries you write will help with functionality such as adding users and returning lists of todos for the app to use. Pay attention to whether the function needs to return something and if it does, what it returns.
+- You don't need to implement any JavaScript logic outside of these SQL queries.
+- The surrounding JavaScript code, including function structures and database connections, is already set up for you.
+- You don't need to modify how the results are returned or how the functions are called.
 
-Finish the implementation of the following functions with the specified functionality:
+### Example:
 
-### _insert_user / insertUser:_
+Here's a simplified example of what you'll be working with:
 
-- Insert a user into the user table
+```javascript
+async function exampleFunction() {
+  const result = await this.db.all(`
+    -- Your SQL query goes here
+    SELECT * FROM users WHERE ...
+  `);
+  return result;
+}
+```
 
-### _insert_todo / insertTodo:_
+Your job is to replace the comment and sample query with the appropriate SQL to fulfill the function's purpose.
 
-- Insert a todo into the todo table a new user should have an auto incremented and unique todo_id
+### Tips:
 
-### _update_todo / updateTodo:_
+- Pay attention to the function names and descriptions to understand what data needs to be retrieved or what operation needs to be performed.
+- Use the database schema provided earlier in this README as a reference for table and column names.
+- Test your queries thoroughly using the UI and sqlite3 command-line tool as described in other sections.
 
-- Update the title, content and priority of a todo for a given todo_id
+Remember, the goal is to develop your SQL skills. The JavaScript environment is there to support your learning, not to complicate it. If you have any questions about the JavaScript aspects, feel free to ask, but your primary focus should be on writing effective SQL queries.
 
-### _return_todos_by_email / returnTodosByEmail:_
+## 🔄 Resetting the Database
 
-- Return all the todos for a given email address. This should return a list of todos
+To reset the database to its initial state, use the following npm scripts:
 
-### _return_todo_by_todo_id / returnTodoByTodoId:_
+1. To tear down the existing database:
 
-- Return the todo for a given todo_id. This should only return one todo as a list of length one
+   ```terminal
+   npm run teardown:db
+   ```
 
-### _remove_user / removeUser:_
+2. To initialize a new database with sample data:
 
-- Delete a user based on their email address
+   ```bash
+   npm run init:db
+   ```
 
-## In _aggregates_:
+3. To perform both operations in sequence (tear down and then initialize):
+   ```bash
+   npm run check
+   ```
 
-In this file you will write queries that will collect data about the use of the app.
+These scripts are defined in the `package.json` file and provide an easy way to manage the database state during development and testing.
 
-**_In JavaScript_** - each function has been set up with a sample query in it. The functions will return a Promise. Replace the sample query with the query you want the function to return.
+## 🔍 Checking Database State with sqlite3
 
-If you want to view the results of these functions open your application up in a new tab and add _/view_aggs_ to the address bar.
+You can use the sqlite3 command-line tool to directly interact with the database and check its state:
 
-Finish the implementation of the following functions:
+1. Open a terminal.
+2. Run the following command to open the SQLite prompt:
+   ```
+   sqlite3 todo.sqlite
+   ```
+3. Once in the SQLite prompt, you can run SQL queries to inspect the database. For example:
+   - To see all tables: `.tables`
+   - To see the schema of a specific table: `.schema table_name`
+   - To query data: `SELECT * FROM table_name;`
+4. To exit the SQLite prompt, type `.quit` and press Enter.
 
-- _total_users_ - How many users are there?
-- _total_todos_ - How many todos are there?
-- _todos_per_user_ - What is the mean number of todos per user?
-- _todos_per_priority_ - How many todos are there for each priority?
-- _max_todos_ - What is the maximum number of todos any email had associated with it?
-- _email_of_max_todos_ - Which email address(es) had the most todos associated with it?
-- _min_todos_ - What is the minimum number of todos any email had associated with it?
-- _email_of_min_todos_ - Which email address(es) had the fewest todos associated with it?
+## 🏗️ Creating Database Tables
 
-## Things to think about:
+You will need to create the following tables in your database. You can edit `dbSetup.js` to write SQL queries for creating database tables.
 
-- You are not required to answer all parts of the assignment but the more you do the more marks you will get.
-- It's an idea to start off by writing all your SQL statements in an SQL file. It will be much easier to test them all in there then it will to test them in the app.
-- You can submit just an SQL file if you are unable to integrate the queries into the app. Some of the marks are for the integration but it is still possible to get a merit in this case. If you submit this way make sure your SQL file is well commented with explanations as to how this query would work in the app.
+### `users`
+
+- `email_address`: A unique identifier for each user (primary key)
+- `first_name`: The user's first name
+- `last_name`: The user's last name
+- `notification_ind`: A single character indicating the user's notification preferences
+
+### `todos`
+
+- `todo_id`: A unique identifier for each todo, automatically incremented
+- `email_address`: The email address of the user who owns this todo (foreign key referencing the users table)
+- `title`: The title of the todo
+- `content`: The content or description of the todo
+- `priority`: A single character indicating the priority of the todo
+- `archive_ind`: A single character indicating whether the todo is archived (defaults to '0')
+- `created_dt`: A timestamp of when the todo was created (defaults to the current timestamp)
+
+To execute these SQL commands:
+
+1. Open the SQLite prompt as described in the "Checking Database State with sqlite3" section.
+2. Copy and paste each CREATE TABLE command into the prompt and press Enter.
+3. Verify the table creation by using the `.tables` command to list all tables, and `.schema table_name` to view the structure of a specific table.
+
+Note: The existing scripts in the project may already handle table creation. Use these commands if you need to manually recreate the tables or if you're setting up a new database instance.
+
+## ✅ Acceptance Criteria for Query Outputs
+
+### dbHelperFunction.js
+
+When implementing the required functions in `dbHelperFunction.js`, ensure that your function outputs match the following criteria exactly:
+
+1. `returnUsersAndTodos()`:
+
+   - Returns an array of objects, each representing a user with their todos:
+     ```javascript
+     [
+       {
+         user: "User Name",
+         todos: [
+           { id: 1, content: "Todo content", title: "Todo title", email_address: "user@example.com", is_complete: 0 },
+           // ... more todos
+         ],
+       },
+       // ... more users
+     ];
+     ```
+
+2. `returnAllTodos()`:
+
+   - Returns an array of all todo objects from the database:
+     ```javascript
+     [
+       { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+       // ... more todos
+     ];
+     ```
+
+3. `returnAllUsers()`:
+
+   - Returns an array of all user objects from the database:
+     ```javascript
+     [
+       { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
+       // ... more users
+     ];
+     ```
+
+4. `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
+
+   - Inserts a new user into the database.
+   - Returns the result of the database operation (implementation-specific).
+
+5. `insertTodo({ emailAddress, title, content, priority })`:
+
+   - Inserts a new todo into the database.
+   - Returns the result of the database operation (implementation-specific).
+
+6. `updateTodo({ title, content, priority, todoId, isComplete })`:
+
+   - Updates an existing todo in the database.
+   - Returns the result of the database operation (implementation-specific).
+
+7. `returnTodoById(todoId)`:
+
+   - Returns a single todo object matching the given ID:
+     ```javascript
+     { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', archive_ind: null, created_dt: null, is_complete: 0 }
+     ```
+
+8. `returnTodoByEmail(emailAddress)`:
+
+   - Returns an array of todo objects for the given email address:
+     ```javascript
+     [
+       { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+       // ... more todos for this email
+     ];
+     ```
+
+9. `removeUser(emailAddress)`:
+   - Removes a user and their associated todos from the database.
+   - Returns the result of the database operation (implementation-specific).
+
+### aggregates.js
+
+When implementing the required queries in `aggregates.js`, ensure that your function outputs match the following criteria exactly:
+
+1. `totalUsers()`:
+
+   - Returns a single integer representing the total number of users.
+
+2. `totalTodos()`:
+
+   - Returns a single integer representing the total number of todos.
+
+3. `todosPerUser()`:
+
+   - Returns an array of objects, each with the following structure:
+     ```javascript
+     { email: 'user@example.com', total_todos: 5 }
+     ```
+
+4. `todosPerPriority()`:
+
+   - Returns an array of objects, each with the following structure:
+     ```javascript
+     {
+       email_address: 'user@example.com',
+       urgent: 1,
+       high_priority: 2,
+       medium_priority: 3,
+       low_priority: 1
+     }
+     ```
+
+5. `emailOfMaxTodos()`:
+
+   - Returns a single object with the following structure:
+     ```javascript
+     { email: 'user@example.com', max_todos: 10 }
+     ```
+
+6. `emailOfMinTodos()`:
+   - Returns a single object with the following structure:
+     ```javascript
+     { email: 'user@example.com', min_todos: 2 }
+     ```
+
+## 🧪 Verifying Query Implementations Using the UI
+
+To ensure your query implementations in `aggregates.js` and `dbHelperFunction.js` are working correctly, you can interact with the application's user interface. This hands-on approach will help you verify that data is being persisted and retrieved correctly.
+
+1. Start the application:
+
+   ```
+   npm run listen
+   ```
+
+2. Open your web browser and navigate to `http://localhost:3000`.
+
+3. Use the following UI features to test your implementations:
+
+   a. User Signup:
+
+   - Click on "User Signup" and fill out the form with a new user's details.
+   - After submission, check if the new user appears on the main page with an empty todo list.
+   - This tests the `insertUser` function in `dbHelperFunction.js`.
+
+   b. Add Todo:
+
+   - Click on "Add Todo" and create a new todo for an existing user.
+   - Verify that the new todo appears in the user's list on the main page.
+   - This tests the `insertTodo` function in `dbHelperFunction.js`.
+
+   c. Edit Todo:
+
+   - Click the edit icon (pencil) next to an existing todo.
+   - Modify the todo and save the changes.
+   - Check if the updates are reflected on the main page.
+   - This tests the `updateTodo` function in `dbHelperFunction.js`.
+
+   d. Remove User:
+
+   - Click on "Remove User" and enter an email address to remove.
+   - Verify that the user and their todos disappear from the main page.
+   - This tests the `removeUser` function in `dbHelperFunction.js`.
+
+   e. View Stats Dashboard:
+
+   - Click on "View stats dashboard" to see aggregated data.
+   - Check if the statistics match your expectations based on the current data.
+   - This tests various functions in `aggregates.js`, including `totalUsers`, `totalTodos`, `todosPerUser`, and `todosPerPriority`.
+
+4. After each operation, you can use the sqlite3 command-line tool (as described in the "Checking Database State with sqlite3" section) to directly verify the database state.
+
+5. If you notice any discrepancies between the UI, the database state, and your expected results, review and debug your query implementations.
+
+Remember to test edge cases, such as:
+
+- Adding todos for users with no existing todos
+- Removing the last todo for a user
+- Adding and removing users with various numbers of todos
+
+By systematically testing each feature in the UI and cross-referencing with direct database queries, you can ensure that your implementations are correct and robust.
+
+## 📝 Additional Notes
+
+- Make sure to run `npm run listen` after resetting the database to see the changes reflected in the UI.
+- If you encounter any issues, ensure that all dependencies are correctly installed and that you're in the correct directory when running the commands.
+- Regularly check your query outputs against the provided acceptance criteria to ensure accuracy.
+- When implementing database operations, pay attention to error handling and edge cases to make your code more robust.
+
+Happy coding and testing!
