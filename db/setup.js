@@ -1,4 +1,4 @@
-const { buildInsertString } = require("./lib/helpers.js");
+const { buildInsertString } = require("../lib/helpers.js");
 
 async function setupDB(db, { todos, users }) {
   const [userFields, userValues] = buildInsertString(users);

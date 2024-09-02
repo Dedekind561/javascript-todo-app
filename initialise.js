@@ -1,6 +1,6 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
-const { setupDB, removeTables } = require("./dbSetup.js");
+const { setupDB, removeTables } = require("./db/setup.js");
 
 (async () => {
   const db = await open({

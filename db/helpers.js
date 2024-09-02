@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
-const { groupUsers } = require("./lib/helpers.js");
+const { groupUsers } = require("../lib/helpers.js");
 
 class SQL {
   constructor(db) {
