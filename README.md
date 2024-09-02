@@ -185,23 +185,25 @@ When implementing the required functions in `dbHelperFunction.js`, ensure that y
 
 2.  `returnAllTodos()`:
 
-    - Returns an array of all todo objects from the database:
-      ```javascript
-      [
-        { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
-        // ... more todos
-      ];
-      ```
+- Returns an array of all todo objects from the database:
+
+```javascript
+[
+  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+  // ... more todos
+];
+```
 
 3.  `returnAllUsers()`:
 
-    - Returns an array of all user objects from the database:
-      ```javascript
-      [
-        { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
-        // ... more users
-      ];
-      ```
+- Returns an array of all user objects from the database:
+
+```javascript
+[
+  { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
+  // ... more users
+];
+```
 
 4.  `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
 
@@ -228,12 +230,13 @@ When implementing the required functions in `dbHelperFunction.js`, ensure that y
 8.  `returnTodoByEmail(emailAddress)`:
 
     - Returns an array of todo objects for the given email address:
-      ```javascript
-      [
-        { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
-        // ... more todos for this email
-      ];
-      ```
+
+```javascript
+[
+  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+  // ... more todos for this email
+];
+```
 
 9.  `removeUser(emailAddress)`:
     - Removes a user and their associated todos from the database.
@@ -261,7 +264,8 @@ When implementing the required queries in `aggregates.js`, ensure that your func
 4. `todosPerPriority()`:
 
    - Returns an array of objects, each with the following structure:
-     ```javascript
+
+```javascript
      {
        email_address: 'user@example.com',
        urgent: 1,
@@ -269,7 +273,7 @@ When implementing the required queries in `aggregates.js`, ensure that your func
        medium_priority: 3,
        low_priority: 1
      }
-     ```
+```
 
 5. `emailOfMaxTodos()`:
 
@@ -292,44 +296,46 @@ To ensure your query implementations in `aggregates.js` and `helpers.js` are wor
 
 1. Start the application:
 
-   ```
-   npm run listen
-   ```
+```terminal
+
+npm run listen
+
+```
 
 2. Open your web browser and navigate to `http://localhost:3000`.
 
 3. Use the following UI features to test your implementations:
 
-   a. User Signup:
+a. User Signup:
 
-   - Click on "User Signup" and fill out the form with a new user's details.
-   - After submission, check if the new user appears on the main page with an empty todo list.
-   - This tests the `insertUser` function in `dbHelperFunction.js`.
+- Click on "User Signup" and fill out the form with a new user's details.
+- After submission, check if the new user appears on the main page with an empty todo list.
+- This tests the `insertUser` function in `dbHelperFunction.js`.
 
-   b. Add Todo:
+b. Add Todo:
 
-   - Click on "Add Todo" and create a new todo for an existing user.
-   - Verify that the new todo appears in the user's list on the main page.
-   - This tests the `insertTodo` function in `dbHelperFunction.js`.
+- Click on "Add Todo" and create a new todo for an existing user.
+- Verify that the new todo appears in the user's list on the main page.
+- This tests the `insertTodo` function in `dbHelperFunction.js`.
 
-   c. Edit Todo:
+c. Edit Todo:
 
-   - Click the edit icon (pencil) next to an existing todo.
-   - Modify the todo and save the changes.
-   - Check if the updates are reflected on the main page.
-   - This tests the `updateTodo` function in `dbHelperFunction.js`.
+- Click the edit icon (pencil) next to an existing todo.
+- Modify the todo and save the changes.
+- Check if the updates are reflected on the main page.
+- This tests the `updateTodo` function in `dbHelperFunction.js`.
 
-   d. Remove User:
+d. Remove User:
 
-   - Click on "Remove User" and enter an email address to remove.
-   - Verify that the user and their todos disappear from the main page.
-   - This tests the `removeUser` function in `dbHelperFunction.js`.
+- Click on "Remove User" and enter an email address to remove.
+- Verify that the user and their todos disappear from the main page.
+- This tests the `removeUser` function in `dbHelperFunction.js`.
 
-   e. View Stats Dashboard:
+e. View Stats Dashboard:
 
-   - Click on "View stats dashboard" to see aggregated data.
-   - Check if the statistics match your expectations based on the current data.
-   - This tests various functions in `aggregates.js`, including `totalUsers`, `totalTodos`, `todosPerUser`, and `todosPerPriority`.
+- Click on "View stats dashboard" to see aggregated data.
+- Check if the statistics match your expectations based on the current data.
+- This tests various functions in `aggregates.js`, including `totalUsers`, `totalTodos`, `todosPerUser`, and `todosPerPriority`.
 
 4. After each operation, you can use the sqlite3 command-line tool (as described in the "Checking Database State with sqlite3" section) to directly verify the database state.
 
