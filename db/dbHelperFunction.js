@@ -10,31 +10,32 @@ class SQL {
     }
   }
 
+  async returnAllTodos() {
+    const result = await this.db.all("select * from todos");
+    return result;
+  }
+
+  async returnAllUsers() {
+    const result = await this.db.all("select * from users");
+    return result;
+  }
+
   async returnUsersAndTodos() {
-    const usersAndTodos = await this.db.all(`
+    const result = await this.db.all(`
       select todos.id as id, first_name, content, title, users.email_address, is_complete from todos
       full join users
       on users.email_address = todos.email_address;
       `);
-    return groupUsers(usersAndTodos);
-  }
-
-  async returnAllTodos() {
-    const todos = await this.db.all("select * from todos");
-    return todos;
-  }
-
-  async returnAllUsers() {
-    const returnAllUsers = await this.db.all("select * from users");
-    return returnAllUsers;
+    return groupUsers(result);
   }
 
   async insertUser({ emailAddress, firstName, lastName, notificationInd }) {
-    return this.db.run(
+    const result = await this.db.run(
       `
       INSERT INTO users (email_address,first_name, last_name, notification_ind) VALUES ('${emailAddress}','${firstName}','${lastName}','${notificationInd}');
       `,
     );
+    return result;
   }
 
   async insertTodo({ emailAddress, title, content, priority }) {
@@ -46,19 +47,21 @@ class SQL {
   }
 
   async updateTodo({ title, content, priority, todoId, isComplete }) {
-    isComplete = isComplete === "on" ? "1" : "0";
     return this.db.run(`UPDATE todos SET content = '${content}', priority='${priority}', title='${title}',is_complete=${isComplete} WHERE id = ${todoId}`);
   }
 
   async returnTodoById(todoId) {
-    return this.db.get(`SELECT * FROM todos WHERE id = ${todoId}`);
+    const result = await this.db.get(`SELECT * FROM todos WHERE id = ${todoId}`);
+    return result;
   }
 
   async returnTodoByEmail(emailAddress) {
-    return this.db.get(`SELECT * FROM todos WHERE email_address = '${emailAddress}'`);
+    const result = await this.db.get(`SELECT * FROM todos WHERE email_address = '${emailAddress}'`);
+    return result;
   }
 
   async removeUser(emailAddress) {
+    await this.db.run("PRAGMA foreign_keys = ON;");
     return this.db.run(`DELETE FROM users WHERE email_address = '${emailAddress}'`);
   }
 }

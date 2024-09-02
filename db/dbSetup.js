@@ -1,25 +1,21 @@
-// buildInsertString() not working for an array of todos
 const { buildInsertString } = require("./lib/helpers.js");
 
 async function setupDB(db, { todos, users }) {
   const [userFields, userValues] = buildInsertString(users);
   const [todoFields, todoValues] = buildInsertString(todos);
 
-  await db.exec(`PRAGMA foreign_keys = ON;`);
   await db.exec(
     `
+    PRAGMA foreign_keys;
+    PRAGMA foreign_keys = ON;
+
     CREATE TABLE users (
       email_address varchar primary key,
       first_name varchar,
       last_name varchar,
       notification_ind char
     );
-    INSERT INTO users ${userFields} VALUES ${userValues};
-    `,
-  );
-  await db.exec(
-    `
-    create table todos (
+     create table todos (
       id integer primary key autoincrement,
       email_address varchar,
       priority varchar,
@@ -28,10 +24,16 @@ async function setupDB(db, { todos, users }) {
       archive_ind char,
       created_dt timestamp,
       is_complete integer default 0,
-      foreign key(email_address) 
-      references users(email_address) 
-      on delete cascade
+      constraint fk_email_address
+       foreign key (email_address) 
+       references users(email_address) 
+       on delete cascade
     );
+    `,
+  );
+  await db.exec(
+    `
+    INSERT INTO users ${userFields} VALUES ${userValues};
     INSERT INTO todos ${todoFields} VALUES ${todoValues};
       `,
   );
