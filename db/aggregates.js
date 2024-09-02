@@ -15,7 +15,7 @@ class Aggregates {
   }
 
   async totalTodos() {
-    const result = await this.db.get(`select count(*) as total_todos from todos`);
+    const result = await this.db.get(`select count(*) as total_todos from todos;`);
     return result.total_todos;
   }
 
@@ -25,7 +25,7 @@ class Aggregates {
       from todos
       right join users
       on users.email_address = todos.email_address 
-      group by users.email_address
+      group by users.email_address;
       `);
     return result;
   }
@@ -48,11 +48,37 @@ class Aggregates {
   }
 
   async emailOfMaxTodos() {
-    return {};
+    const result = await this.db.get(`
+    select max(todos.id) as max_todos, users.email_address
+    from todos
+    right join users
+    on users.email_address = todos.email_address;
+        `);
+    return result;
   }
 
   async emailOfMinTodos() {
-    return {};
+    const result = await this.db.get(`
+    select min(ifnull(todos.id, 0)) as min_todos, users.email_address
+    from todos
+    right join users
+    on users.email_address = todos.email_address;
+        `);
+    return result;
+  }
+
+  async avgTodosPerUser() {
+    const result = await this.db.get(`
+      WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+      SELECT AVG(todo_count) as avg_todos_per_user FROM user_todo_counts;
+      `);
+    return result;
   }
 }
 
