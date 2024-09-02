@@ -9,14 +9,14 @@ describe("SQL helpers", () => {
 
   beforeEach(async () => {
     db = await open({
-      filename: "todo.sqlite",
+      filename: "todo_test.sqlite",
       driver: sqlite3.Database,
     });
     const todos = [
-      { email_address: "steve@ada.ac.uk", id: 1, content: "Do homework", priority: "Urgent" },
-      { email_address: "geoff@ada.ac.uk", id: 2, content: "Organise meeting", priority: "Urgent" },
-      { email_address: "geoff@ada.ac.uk", id: 3, content: "Plan staff training", priority: "Important" },
-      { email_address: "geoff@ada.ac.uk", id: 4, content: "Interview candidate lecturer", priority: "Non-important" },
+      { email_address: "steve@ada.ac.uk", id: 1, content: "Do homework", priority: "U" },
+      { email_address: "geoff@ada.ac.uk", id: 2, content: "Organise meeting", priority: "U" },
+      { email_address: "geoff@ada.ac.uk", id: 3, content: "Plan staff training", priority: "H" },
+      { email_address: "geoff@ada.ac.uk", id: 4, content: "Interview candidate lecturer", priority: "L" },
     ];
     const users = [{ email_address: "claire@ada.ac.uk" }, { email_address: "steve@ada.ac.uk" }, { email_address: "geoff@ada.ac.uk" }];
     await removeTables(db);
