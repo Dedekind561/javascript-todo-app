@@ -48,7 +48,6 @@ const app = express();
 
   app.get("/", async (req, res) => {
     const users = await sql.returnUsersAndTodos();
-    console.log(users);
     res.render("index", { users: groupUsers(users) });
   });
 
@@ -164,13 +163,11 @@ const app = express();
       return acc;
     }, {});
 
-    console.log({ todosPerPriority });
-
     res.render("stats", {
       chartData: JSON.stringify({ labels: Object.keys(todosPerUser), values: Object.values(todosPerUser) }),
       todosPerPriority: JSON.stringify(groupUserByPriority(todosPerPriority)),
-      totalUsers: JSON.stringify(totalUsers),
-      totalTodos: JSON.stringify(totalTodos),
+      totalUsers: totalUsers?.total_users,
+      totalTodos: totalTodos?.total_todos,
       todosPerUser: JSON.stringify(todosPerUser),
       emailOfMaxTodos: emailOfMaxTodos.email_address,
       emailOfMinTodos: emailOfMinTodos.email_address,
