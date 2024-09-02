@@ -11,12 +11,12 @@ class Aggregates {
 
   async totalUsers() {
     const result = await this.db.get(`select count(*) as total_users from users;`);
-    return result.total_users;
+    return result;
   }
 
   async totalTodos() {
     const result = await this.db.get(`select count(*) as total_todos from todos;`);
-    return result.total_todos;
+    return result;
   }
 
   async todosPerUser() {
@@ -49,20 +49,28 @@ class Aggregates {
 
   async emailOfMaxTodos() {
     const result = await this.db.get(`
-    select max(todos.id) as max_todos, users.email_address
-    from todos
-    right join users
-    on users.email_address = todos.email_address;
+    WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+    SELECT max(todo_count) as min_todos, email_address FROM user_todo_counts;
         `);
     return result;
   }
 
   async emailOfMinTodos() {
     const result = await this.db.get(`
-    select min(ifnull(todos.id, 0)) as min_todos, users.email_address
-    from todos
-    right join users
-    on users.email_address = todos.email_address;
+    WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+      SELECT min(todo_count) as min_todos, email_address FROM user_todo_counts;
         `);
     return result;
   }
