@@ -71,10 +71,9 @@ We want to reassure you that your primary focus should be on writing effective S
 Here's a simplified example of what you'll be working with:
 
 ```javascript
-async function exampleFunction() {
+async function returnAllTodos() {
   const result = await this.db.all(`
-    -- Your SQL query goes here
-    SELECT * FROM users WHERE ...
+  -- Your SQL query goes here..
   `);
   return result;
 }
@@ -162,6 +161,28 @@ Note: The existing scripts in the project may already handle table creation. Use
 
 When implementing the required functions in `db/helpers.js`, ensure that your function outputs match the following criteria exactly:
 
+1.  `returnAllTodos()`:
+
+- Returns an array of all todo objects from the database:
+
+```javascript
+[
+  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", created_at: null, is_complete: 0 },
+  // ... more todos
+];
+```
+
+1.  `returnAllUsers()`:
+
+- Returns an array of all user objects from the database:
+
+```javascript
+[
+  { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
+  // ... more users
+];
+```
+
 1.  `returnUsersAndTodos()`:
 
     - Returns an array of objects, each representing a user with their todos:
@@ -183,51 +204,30 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
 // ... more todos with user names
 ```
 
-2.  `returnAllTodos()`:
-
-- Returns an array of all todo objects from the database:
-
-```javascript
-[
-  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
-  // ... more todos
-];
-```
-
-3.  `returnAllUsers()`:
-
-- Returns an array of all user objects from the database:
-
-```javascript
-[
-  { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
-  // ... more users
-];
-```
-
-4.  `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
+1.  `insertUser({ emailAddress, firstName, lastName, notificationInd })`:
 
     - Inserts a new user into the database.
     - Returns the result of the database operation (implementation-specific).
 
-5.  `insertTodo({ emailAddress, title, content, priority })`:
+1.  `insertTodo({ emailAddress, title, content, priority })`:
 
     - Inserts a new todo into the database.
     - Returns the result of the database operation (implementation-specific).
 
-6.  `updateTodo({ title, content, priority, todoId, isComplete })`:
+1.  `updateTodo({ title, content, priority, todoId, isComplete })`:
 
     - Updates an existing todo in the database.
     - Returns the result of the database operation (implementation-specific).
 
-7.  `returnTodoById(todoId)`:
+1.  `returnTodoById(todoId)`:
 
     - Returns a single todo object matching the given ID:
-      ```javascript
-      { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', archive_ind: null, created_dt: null, is_complete: 0 }
-      ```
 
-8.  `returnTodoByEmail(emailAddress)`:
+````javascript
+      { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', created_dt: null, is_complete: 0 }
+```
+
+1.  `returnTodoByEmail(emailAddress)`:
 
     - Returns an array of todo objects for the given email address:
 
@@ -236,9 +236,9 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
   { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
   // ... more todos for this email
 ];
-```
+````
 
-9.  `removeUser(emailAddress)`:
+1.  `removeUser(emailAddress)`:
     - Removes a user and their associated todos from the database.
     - Returns the result of the database operation (implementation-specific).
 
