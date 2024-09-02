@@ -1,8 +1,8 @@
 const { describe, expect, test } = require("@jest/globals");
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
-const { setupDB, removeTables } = require("../dbSetup.js");
-const SQL = require("../aggregates.js");
+const { setupDB, removeTables } = require("../db/setup.js");
+const SQL = require("../db/aggregates.js");
 
 describe("SQL helpers", () => {
   let db;
