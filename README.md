@@ -130,7 +130,7 @@ You can use the sqlite3 command-line tool to directly interact with the database
 
 ## 🏗️ Creating Database Tables
 
-You will need to create the following tables in your database. You can edit `dbSetup.js` to write SQL queries for creating database tables.
+You will need to create the following tables in your database. You can edit `db/setup.js` to write SQL queries for creating database tables.
 
 ### `users`
 
@@ -160,7 +160,7 @@ Note: The existing scripts in the project may already handle table creation. Use
 
 ### `db/helpers.js`
 
-When implementing the required functions in `dbHelperFunction.js`, ensure that your function outputs match the following criteria exactly:
+When implementing the required functions in `db/helpers.js`, ensure that your function outputs match the following criteria exactly:
 
 1.  `returnUsersAndTodos()`:
 
