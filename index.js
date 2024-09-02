@@ -83,6 +83,7 @@ const app = express();
     let content = req.body.content;
     let priority = req.body.priority;
     let isComplete = req.body.is_complete;
+    isComplete = isComplete === "on" ? "1" : "0";
     sql.updateTodo({ title, content, priority, todoId, isComplete });
     res.redirect("/");
   });
@@ -94,12 +95,12 @@ const app = express();
   });
 
   app.post("/user_signup", (req, res) => {
-    let email = req.body.email;
+    let emailAddress = req.body.email;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let notificationInd = req.body.notifSettings;
 
-    sql.insertUser({ email, firstName, lastName, notificationInd });
+    sql.insertUser({ emailAddress, firstName, lastName, notificationInd });
 
     res.redirect("/");
   });
@@ -108,19 +109,19 @@ const app = express();
 
   app.get("/add_todo", async (req, res) => {
     const users = await sql.returnAllUsers();
-    console.log(users, "<--- users");
+
     res.render("add_todo", {
       users,
     });
   });
 
   app.post("/add_todo", (req, res) => {
-    let email = req.body.email;
+    let emailAddress = req.body.email;
     let title = req.body.title;
     let content = req.body.content;
     let priority = req.body.priority;
 
-    sql.insertTodo({ email, title, content, priority });
+    sql.insertTodo({ emailAddress, title, content, priority });
 
     res.redirect("/");
   });
@@ -146,20 +147,51 @@ const app = express();
 
   app.get("/stats", async (req, res) => {
     let aggs = new Aggregates(db);
-    Promise.all([aggs.totalUsers(), aggs.totalTodos(), aggs.todosPerUser(), aggs.todosPerPriority(), aggs.maxTodos(), aggs.emailOfMaxTodos(), aggs.minTodos(), aggs.emailOfMinTodos()]).then(
-      ([totalUsers, totalTodos, todosPerUser, todosPerPriority, maxTodos, emailOfMaxTodos, minTodos, emailOfMinTodos]) => {
-        res.render("view_aggs", {
-          totalUsers: JSON.stringify(totalUsers),
-          totalTodos: JSON.stringify(totalTodos),
-          todosPerUser: JSON.stringify(todosPerUser),
-          todosPerPriority: JSON.stringify(todosPerPriority),
-          maxTodos: JSON.stringify(maxTodos),
-          emailOfMaxTodos: JSON.stringify(emailOfMaxTodos),
-          minTodos: JSON.stringify(minTodos),
-          emailOfMinTodos: JSON.stringify(emailOfMinTodos),
-        });
+    let [totalUsers, totalTodos, todosPerUser, todosPerPriority, emailOfMaxTodos, emailOfMinTodos] = await Promise.all([
+      aggs.totalUsers(),
+      aggs.totalTodos(),
+      aggs.todosPerUser(),
+      aggs.todosPerPriority(),
+      aggs.emailOfMaxTodos(),
+      aggs.emailOfMinTodos(),
+    ]);
+    console.log(totalUsers);
+    todosPerUser = todosPerUser.reduce((acc, { total_todos, email }) => {
+      acc[email] = total_todos;
+      return acc;
+    }, {});
+    const labels = todosPerPriority.map((row) => row.email_address);
+    const datasets = [
+      {
+        label: "Urgent",
+        data: todosPerPriority.map((row) => row.urgent),
+        backgroundColor: "rgba(255, 0, 0, 0.6)",
       },
-    );
+      {
+        label: "High Priority",
+        data: todosPerPriority.map((row) => row.high_priority),
+        backgroundColor: "rgba(255, 99, 132, 0.6)",
+      },
+      {
+        label: "Medium Priority",
+        data: todosPerPriority.map((row) => row.medium_priority),
+        backgroundColor: "rgba(54, 162, 235, 0.6)",
+      },
+      {
+        label: "Low Priority",
+        data: todosPerPriority.map((row) => row.low_priority),
+        backgroundColor: "rgba(255, 206, 86, 0.6)",
+      },
+    ];
+    res.render("view_aggs", {
+      chartData: JSON.stringify({ labels: Object.keys(todosPerUser), values: Object.values(todosPerUser) }),
+      todosPerPriority: JSON.stringify({ labels, datasets }),
+      totalUsers: JSON.stringify(totalUsers),
+      totalTodos: JSON.stringify(totalTodos),
+      todosPerUser: JSON.stringify(todosPerUser),
+      emailOfMaxTodos: JSON.stringify(emailOfMaxTodos),
+      emailOfMinTodos: JSON.stringify(emailOfMinTodos),
+    });
   });
 
   app.listen(3000, () => {
