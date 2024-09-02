@@ -25,7 +25,6 @@ const app = express();
       extname: ".hbs",
       helpers: {
         ternary: function (condition, yes, no) {
-          console.log({ condition, yes, no });
           return condition ? yes : no;
         },
         isChecked: function (condition) {
