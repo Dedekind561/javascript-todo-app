@@ -7,6 +7,7 @@ const path = require("path");
 
 const SQL = require("./db/helpers");
 const Aggregates = require("./db/aggregates");
+const { groupUsers, groupUserByPriority } = require("./lib/helpers");
 
 // Boilerplate
 
@@ -47,7 +48,8 @@ const app = express();
 
   app.get("/", async (req, res) => {
     const users = await sql.returnUsersAndTodos();
-    res.render("index", { users });
+    console.log(users);
+    res.render("index", { users: groupUsers(users) });
   });
 
   // LIST TODOS
@@ -147,50 +149,30 @@ const app = express();
 
   app.get("/stats", async (req, res) => {
     let aggs = new Aggregates(db);
-    let [totalUsers, totalTodos, todosPerUser, todosPerPriority, emailOfMaxTodos, emailOfMinTodos] = await Promise.all([
+    let [totalUsers, totalTodos, todosPerUser, todosPerPriority, emailOfMaxTodos, emailOfMinTodos, avgTodosPerUser] = await Promise.all([
       aggs.totalUsers(),
       aggs.totalTodos(),
       aggs.todosPerUser(),
       aggs.todosPerPriority(),
       aggs.emailOfMaxTodos(),
       aggs.emailOfMinTodos(),
+      aggs.avgTodosPerUser(),
     ]);
-    console.log(totalUsers);
+
     todosPerUser = todosPerUser.reduce((acc, { total_todos, email }) => {
       acc[email] = total_todos;
       return acc;
     }, {});
-    const labels = todosPerPriority.map((row) => row.email_address);
-    const datasets = [
-      {
-        label: "Urgent",
-        data: todosPerPriority.map((row) => row.urgent),
-        backgroundColor: "rgba(255, 0, 0, 0.6)",
-      },
-      {
-        label: "High Priority",
-        data: todosPerPriority.map((row) => row.high_priority),
-        backgroundColor: "rgba(255, 99, 132, 0.6)",
-      },
-      {
-        label: "Medium Priority",
-        data: todosPerPriority.map((row) => row.medium_priority),
-        backgroundColor: "rgba(54, 162, 235, 0.6)",
-      },
-      {
-        label: "Low Priority",
-        data: todosPerPriority.map((row) => row.low_priority),
-        backgroundColor: "rgba(255, 206, 86, 0.6)",
-      },
-    ];
-    res.render("view_aggs", {
+
+    res.render("stats", {
       chartData: JSON.stringify({ labels: Object.keys(todosPerUser), values: Object.values(todosPerUser) }),
-      todosPerPriority: JSON.stringify({ labels, datasets }),
+      todosPerPriority: JSON.stringify(groupUserByPriority(todosPerPriority)),
       totalUsers: JSON.stringify(totalUsers),
       totalTodos: JSON.stringify(totalTodos),
       todosPerUser: JSON.stringify(todosPerUser),
-      emailOfMaxTodos: JSON.stringify(emailOfMaxTodos),
-      emailOfMinTodos: JSON.stringify(emailOfMinTodos),
+      emailOfMaxTodos: emailOfMaxTodos.email_address,
+      emailOfMinTodos: emailOfMinTodos.email_address,
+      avgTodosPerUser: avgTodosPerUser.avg_todos_per_user,
     });
   });
 
