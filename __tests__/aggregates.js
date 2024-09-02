@@ -76,5 +76,12 @@ describe("SQL helpers", () => {
         expect(result.email_address).toBe("geoff@ada.ac.uk");
       });
     });
+    describe("avgTodosPerUser()", () => {
+      test("can get the email of user with the most todos", async () => {
+        const sqlInstance = new SQL(db);
+        const result = await sqlInstance.avgTodosPerUser();
+        expect(result.avg_todos_per_user).toBe(2.0);
+      });
+    });
   });
 });
