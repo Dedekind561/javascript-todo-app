@@ -1,0 +1,4 @@
+email_address,first_name,last_name,notification_ind
+john.doe@example.com,John,Doe,Y
+jane.smith@example.com,Jane,Smith,N
+alice.johnson@example.com,Alice,Johnson,Y
