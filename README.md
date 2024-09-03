@@ -1,23 +1,47 @@
 # 📝 Todo List Application
 
-This README will guide you through setting up, working with, and testing the TODO List application.
+This README will guide you through the two-part assignment for the TODO List application.
 
 ## Table of Contents
 
-1. [⚙️ Check your installation](#️-check-your-installation)
-2. [🖼️ Viewing the Todo List UI](#️-viewing-the-todo-list-ui)
-3. [📂 Locating Files to Edit](#-locating-files-to-edit)
-4. [💻 Working on this assignment](#-working-on-this-assignment)
+1. [📋 Assignment Overview](#-assignment-overview)
+2. [⚙️ Check your installation](#️-check-your-installation)
+3. [🏗️ Part 1: SQL Query Development](#️-part-1-sql-query-development)
+   - [Database Schema](#database-schema)
+   - [Required SQL Queries](#required-sql-queries)
+   - [Testing SQL Queries](#testing-sql-queries)
+4. [🖼️ Part 2: Integration with Todo List UI](#️-part-2-integration-with-todo-list-ui)
+   - [Viewing the Todo List UI](#viewing-the-todo-list-ui)
+   - [Locating Files to Edit](#locating-files-to-edit)
+   - [Integrating SQL Queries](#integrating-sql-queries)
 5. [🔄 Resetting the Database](#-resetting-the-database)
 6. [🔍 Checking Database State with sqlite3](#-checking-database-state-with-sqlite3)
-7. [🏗️ Creating Database Tables](#️-creating-database-tables)
-8. [✅ Acceptance Criteria for Query Outputs](#-acceptance-criteria-for-query-outputs)
-   - [dbHelperFunction.js](#dbhelperfunctionjs)
-   - [aggregates.js](#aggregatesjs)
-9. [🧪 Verifying Query Implementations Using the UI](#-verifying-query-implementations-using-the-ui)
-10. [📝 Additional Notes](#-additional-notes)
+7. [✅ Acceptance Criteria for Query Outputs](#-acceptance-criteria-for-query-outputs)
+8. [🧪 Verifying Query Implementations Using the UI](#-verifying-query-implementations-using-the-ui)
+9. [📝 Additional Notes](#-additional-notes)
+
+## 📋 Assignment Overview
+
+This assignment is divided into two parts:
+
+1. **Part 1: SQL Query Development**
+
+   - Create SQL commands to set up database tables
+   - Write SQL queries to retrieve and manipulate data according to the business requirements
+   - Test the SQL queries using sqlite3
+
+2. **Part 2: Integration with Todo List UI**
+   - Integrate the SQL queries from Part 1 into the provided Todo application
+   - Implement the queries in the appropriate JavaScript files
+   - Test the integration using the Todo List UI
 
 ## ⚙️ Check your installation
+
+1. Check you have sqlite3 installed in your project:
+
+```terminal
+sqlite3 --version
+```
 
 1. Check you have node installed in your project:
 
@@ -25,13 +49,145 @@ This README will guide you through setting up, working with, and testing the TOD
 node -v
 ```
 
-2. Check you have sqlite3 installed in your project:
+## 🏗️ Part 1: SQL Query Development
 
-```terminal
-sqlite3 --version
-```
+In this part, you will focus on writing SQL queries to set up the database and retrieve data according to the application requirements.
 
-## 🖼️ Viewing the Todo List UI
+### Database Schema
+
+Create the following tables in your database:
+
+#### `users` table
+
+- `email_address`: VARCHAR, Primary Key
+- `first_name`: VARCHAR
+- `last_name`: VARCHAR
+- `notification_ind`: CHAR(1)
+
+#### `todos` table
+
+- `id`: INTEGER, Primary Key, Auto-increment
+- `email_address`: VARCHAR, Foreign Key referencing users(email_address)
+- `title`: VARCHAR
+- `content`: VARCHAR
+- `priority`: CHAR(1)
+- `created_dt`: TIMESTAMP
+- `is_complete`: INTEGER (0 or 1)
+
+### Required SQL Queries
+
+Write SQL queries for the following operations:
+
+# 📝 Todo List Application
+
+[Previous content remains unchanged]
+
+### Required SQL Queries
+
+Write SQL queries for the following operations. For each query, the expected output format is described:
+
+1. Create the `users` and `todos` tables
+
+   - Output: No result set, but the tables should be created in the database
+
+1. Insert a new user
+
+   - Output: No result set, but the user should be added to the `users` table
+
+1. Insert a new todo for a user
+
+   - Output: No result set, but the todo should be added to the `todos` table
+
+1. Update a todo
+
+   - Output: No result set, but the specified todo should be updated in the `todos` table
+
+1. Select todos by user
+
+   - Output: A result set with columns:
+     ```
+     id | title | content | priority | created_dt | is_complete
+     ```
+
+1. Select a todo by ID
+
+   - Output: A single row result set with columns:
+     ```
+     id | email_address | title | content | priority | created_dt | is_complete
+     ```
+
+1. Remove a user and their todos
+
+   - Output: No result set, but the user and their associated todos should be removed from the database
+
+1. Count the total number of users
+
+   - Output: A single row, single column result set:
+     ```
+     total_users
+     ```
+
+1. Count the total number of todos
+
+   - Output: A single row, single column result set:
+     ```
+     total_todos
+     ```
+
+1. List the number of todos per user
+
+   - Output: A result set with columns:
+     ```
+     email_address | todo_count
+     ```
+
+1. List the number of todos by priority for each user
+
+   - Output: A result set with columns:
+     ```
+     email_address | urgent_count | high_count | medium_count | low_count
+     ```
+
+1. Find the user with the most todos
+
+   - Output: A single row result set with columns:
+     ```
+     email_address | todo_count
+     ```
+
+1. Find the user with the least todos
+
+   - Output: A single row result set with columns:
+     ```
+     email_address | todo_count
+     ```
+
+1. Calculate the average number of todos per user
+   - Output: A single row, single column result set:
+     ```
+     average_todos
+     ```
+
+When testing these queries, make sure the output matches the described format. This will ensure that the queries will integrate smoothly with the Todo List application in Part 2 of the assignment.
+
+[Rest of the content remains unchanged]
+
+### Testing SQL Queries
+
+To test your SQL queries:
+
+1. Open a terminal and start the sqlite3 command-line tool:
+   ```
+   sqlite3 todo.sqlite
+   ```
+2. Run your SQL queries in the sqlite3 prompt
+3. Verify the output matches the expected results
+
+## 🖼️ Part 2: Integration with Todo List UI
+
+In this part, you will integrate the SQL queries you developed in Part 1 into the Todo List application.
+
+### Viewing the Todo List UI
 
 1. Start the todo application frontend by running:
 
@@ -41,53 +197,28 @@ npm run listen
 
 2. Open a web browser and go to `http://localhost:3000` to view the TODO list UI.
 
-## 📂 Locating Files to Edit
+### Locating Files to Edit
 
 The files you'll need to edit are inside the `db` folder:
 
 1. `setup.js`: This file contains code to create tables and insert data.
+2. `helpers.js`: This file contains helper functions for database operations.
+3. `aggregates.js`: This file contains functions for aggregating data from the database.
 
-1. `helpers.js`: This file contains helper functions for database operations.
+### Integrating SQL Queries
 
-1. `aggregates.js`: This file contains functions for aggregating data from the database.
-
-## 💻 Working on this assignment
-
-We want to reassure you that your primary focus should be on writing effective SQL queries. Here's what you need to know:
-
-### What You Need to Do:
-
-- Your main task is to write SQL queries within the backticks (` `) in the `aggregates.js`, `helpers.js` and `setup.js` files inside the `db` folder.
-- Focus on crafting correct SQL statements to retrieve or manipulate the data as required by each function.
-
-### What You Don't Need to Worry About:
-
-- You don't need to implement any JavaScript logic outside of these SQL queries.
-- The surrounding JavaScript code, including function structures and database connections, is already set up for you.
-- You don't need to modify how the results are returned or how the functions are called.
-
-### Example:
-
-Here's a simplified example of what you'll be working with:
+In each of the files mentioned above, you'll find functions where you need to insert your SQL queries. For example:
 
 ```javascript
 async function returnAllTodos() {
   const result = await this.db.all(`
-  -- Your SQL query goes here..
+    -- Your SQL query goes here
   `);
   return result;
 }
 ```
 
-Your job is to replace the comment and sample query with the appropriate SQL to fulfill the function's purpose.
-
-### Tips:
-
-- Pay attention to the function names and descriptions to understand what data needs to be retrieved or what operation needs to be performed.
-- Use the database schema provided earlier in this README as a reference for table and column names.
-- Test your queries thoroughly using the UI and sqlite3 command-line tool as described in other sections.
-
-Remember, the goal is to develop your SQL skills. The JavaScript environment is there to support your learning, not to complicate it. If you have any questions about the JavaScript aspects, feel free to ask, but your primary focus should be on writing effective SQL queries.
+Replace the comment with the appropriate SQL query you developed in Part 1.
 
 ## 🔄 Resetting the Database
 
@@ -110,8 +241,6 @@ To reset the database to its initial state, use the following npm scripts:
    npm run check
    ```
 
-These scripts are defined in the `package.json` file and provide an easy way to manage the database state during development and testing.
-
 ## 🔍 Checking Database State with sqlite3
 
 You can use the sqlite3 command-line tool to directly interact with the database and check its state:
@@ -127,34 +256,6 @@ You can use the sqlite3 command-line tool to directly interact with the database
    - To query data: `SELECT * FROM table_name;`
 4. To exit the SQLite prompt, type `.quit` and press Enter.
 
-## 🏗️ Creating Database Tables
-
-You will need to create the following tables in your database. You can edit `db/setup.js` to write SQL queries for creating database tables.
-
-### `users`
-
-- `email_address`: A unique identifier for each user (primary key)
-- `first_name`: The user's first name
-- `last_name`: The user's last name
-- `notification_ind`: A single character indicating the user's notification preferences
-
-### `todos`
-
-- `id`: A unique identifier for each todo, automatically incremented
-- `email_address`: The email address of the user who owns this todo (foreign key referencing the users table)
-- `title`: The title of the todo
-- `content`: The content or description of the todo
-- `priority`: A single character indicating the priority of the todo (can be one of `'U'`, `'H'`, `'M'` or `'L'`)
-- `created_at`: A timestamp of when the todo was created (defaults to the current timestamp)
-
-To execute these SQL commands:
-
-1. Open the SQLite prompt as described in the "Checking Database State with sqlite3" section.
-2. Copy and paste each CREATE TABLE command into the prompt and press Enter.
-3. Verify the table creation by using the `.tables` command to list all tables, and `.schema table_name` to view the structure of a specific table.
-
-Note: The existing scripts in the project may already handle table creation. Use these commands if you need to manually recreate the tables or if you're setting up a new database instance.
-
 ## ✅ Acceptance Criteria for query outputs
 
 ### `db/helpers.js`
@@ -167,7 +268,15 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
 
 ```javascript
 [
-  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", created_at: null, is_complete: 0 },
+  {
+    id: 1,
+    email_address: "user@example.com",
+    priority: "H",
+    title: "Todo title",
+    content: "Todo content",
+    created_at: null,
+    is_complete: 0,
+  },
   // ... more todos
 ];
 ```
@@ -178,7 +287,12 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
 
 ```javascript
 [
-  { email_address: "user@example.com", first_name: "User", last_name: "Name", notification_ind: null },
+  {
+    email_address: "user@example.com",
+    first_name: "User",
+    last_name: "Name",
+    notification_ind: null,
+  },
   // ... more users
 ];
 ```
@@ -223,8 +337,16 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
 
     - Returns a single todo object matching the given ID:
 
-````javascript
-      { id: 1, email_address: 'user@example.com', priority: 'H', title: 'Todo title', content: 'Todo content', created_dt: null, is_complete: 0 }
+```javascript
+{
+  id: 1,
+  email_address: "user@example.com",
+  priority: "H",
+  title: "Todo title",
+  content: "Todo content",
+  created_dt: null,
+  is_complete: 0,
+};
 ```
 
 1.  `returnTodoByEmail(emailAddress)`:
@@ -233,10 +355,19 @@ When implementing the required functions in `db/helpers.js`, ensure that your fu
 
 ```javascript
 [
-  { id: 1, email_address: "user@example.com", priority: "H", title: "Todo title", content: "Todo content", archive_ind: null, created_dt: null, is_complete: 0 },
+  {
+    id: 1,
+    email_address: "user@example.com",
+    priority: "H",
+    title: "Todo title",
+    content: "Todo content",
+    archive_ind: null,
+    created_dt: null,
+    is_complete: 0,
+  },
   // ... more todos for this email
 ];
-````
+```
 
 1.  `removeUser(emailAddress)`:
     - Removes a user and their associated todos from the database.
@@ -259,7 +390,7 @@ When implementing the required queries in `aggregates.js`, ensure that your func
    - Returns an array of objects, each with the following structure:
 
 ```javascript
-     { email: 'user@example.com', total_todos: 5 }
+{ email: 'user@example.com', total_todos: 5 }
 ```
 
 4. `todosPerPriority()`:
@@ -267,25 +398,26 @@ When implementing the required queries in `aggregates.js`, ensure that your func
    - Returns an array of objects, each with the following structure:
 
 ```javascript
-     {
-       email_address: 'user@example.com',
-       urgent: 1,
-       high_priority: 2,
-       medium_priority: 3,
-       low_priority: 1
-     }
+{
+   email_address: 'user@example.com',
+   urgent: 1,
+   high_priority: 2,
+   medium_priority: 3,
+   low_priority: 1
+}
 ```
 
 5. `emailOfMaxTodos()`:
 
    - Returns a single object with the following structure:
 
-````javascript
+```javascript
      { email: 'user@example.com', max_todos: 10 }
 ```
 
 6. `emailOfMinTodos()`:
    - Returns a single object with the following structure:
+
 ```javascript
 
 { email: 'user@example.com', min_todos: 2 }
@@ -303,7 +435,7 @@ To ensure your query implementations in `aggregates.js` and `helpers.js` are wor
 
 npm run listen
 
-````
+```
 
 2. Open your web browser and navigate to `http://localhost:3000`.
 
