@@ -1,21 +1,32 @@
 
-select count(todos.id) as total_todos
-from todos
-right join users
-on users.email_address = todos.email_address 
-GROUP BY users.email_address;
+.mode column
+.headers on
 
 
-select * from todos;
+WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+SELECT min(todo_count) as min_todos, email_address FROM user_todo_counts;
 
--- find max number of todos via email
-select max(todos.id) as total_todos
-from todos
-right join users
-on users.email_address = todos.email_address 
-GROUP BY users.email_address;
+WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+SELECT max(todo_count) as max_todos, email_address FROM user_todo_counts;
 
--- select all users and todos
-select first_name, content, title from todos
-full join users
-on users.email_address = todos.email_address;
+WITH user_todo_counts AS (
+      SELECT count(todos.id) as todo_count, users.email_address
+      FROM todos
+      right join users
+      on users.email_address = todos.email_address
+      GROUP BY users.email_address
+)
+SELECT avg(todo_count) as avg_todos_per_user, email_address FROM user_todo_counts;
+

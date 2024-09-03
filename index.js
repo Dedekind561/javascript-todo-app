@@ -10,7 +10,6 @@ const Aggregates = require("./db/aggregates");
 const { groupUsers, groupUserByPriority } = require("./lib/helpers");
 
 // Boilerplate
-
 const app = express();
 (async () => {
   const db = await open({
@@ -174,8 +173,6 @@ const app = express();
       avgTodosPerUser: avgTodosPerUser.avg_todos_per_user,
     });
   });
-
-  app.listen(3000, () => {
-    console.log(`listening on port 3000...`);
-  });
 })();
+
+module.exports = app;

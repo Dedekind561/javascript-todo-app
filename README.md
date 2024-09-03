@@ -49,13 +49,13 @@ sqlite3 --version
 node -v
 ```
 
-## 🏗️ Part 1: SQL Query Development
+## 🏗️ Part 1: SQL Query development
 
 In this part, you will focus on writing SQL queries to set up the database and retrieve data according to the application requirements.
 
 ### Database Schema
 
-Create the following tables in your database:
+Create the following tables in your database. We have provided a file `setup.sql` inside the `part-1` folder where you can create tables and insert data using SQL.
 
 #### `users` table
 
@@ -80,15 +80,9 @@ Write SQL queries for the following operations:
 
 # 📝 Todo List Application
 
-[Previous content remains unchanged]
-
 ### Required SQL Queries
 
-Write SQL queries for the following operations. For each query, the expected output format is described:
-
-1. Create the `users` and `todos` tables
-
-   - Output: No result set, but the tables should be created in the database
+Write SQL queries for the following operations. We have provided a file `queries.sql` inside the `part-1` folder where you can create tables and insert data using SQL. For each query, the expected output format is described:
 
 1. Insert a new user
 
@@ -425,7 +419,7 @@ When implementing the required queries in `aggregates.js`, ensure that your func
 
 Note: this function can return a `min_todos` of `0` if there are no todos associated with a given user. If there are multiple users with the same minimum then it should return the first user
 
-## 🧪 Verifying query implementations Using the UI
+## 🧪 Verifying query implementations using the UI
 
 To ensure your query implementations in `aggregates.js` and `helpers.js` are working correctly, you can interact with the application's user interface. This hands-on approach will help you verify that data is being persisted and retrieved correctly.
 

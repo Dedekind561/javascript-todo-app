@@ -10,7 +10,7 @@ class SQL {
   }
 
   async returnAllTodos() {
-    const result = await this.db.all("select * from todos");
+    const result = await this.db.all(`select * from todos`);
     return result;
   }
 
